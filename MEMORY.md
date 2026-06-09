@@ -20,3 +20,9 @@ Houd deze file scherp. Dubbele inzichten worden bij merge gededupliceerd. Veroud
 ---
 
 <!-- Begin van de inzichten -->
+
+## LLM-benchmark-bronhygiëne
+**Datum:** 2026-06-10
+**Categorie:** constraint
+**Inhoud:** Anthropic publiceert geen cross-model benchmark-tabellen in de officiële modeldocs; vergelijkende scores komen van third-party aggregators (llm-stats, morphllm) en zijn deels via verschillende harnesses gemeten. Behandel zulke cross-model cijfers altijd als indicatief en geef een bron-disclaimer mee.
+**Bron:** sessie-log 2026-06-10-0025
