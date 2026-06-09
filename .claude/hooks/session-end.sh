@@ -64,26 +64,33 @@ timestamp=$(date +%Y-%m-%d-%H%M)
 session_focus=""
 if [[ -n "${transcript_path}" && -f "${transcript_path}" ]]; then
     session_focus=$(python3 - <<PYEOF 2>/dev/null || echo ""
-import json, sys
+import json, sys, re
+
+def user_text(entry):
+    # Claude Code transcript: top-level type 'user', content onder message.content
+    if entry.get('type') != 'user':
+        return ''
+    content = (entry.get('message') or {}).get('content', '')
+    if isinstance(content, list):
+        content = ' '.join(
+            c.get('text', '') for c in content
+            if isinstance(c, dict) and c.get('type') == 'text'
+        )
+    return str(content or '').strip()
+
 try:
     with open("${transcript_path}") as f:
         for line in f:
             try:
                 entry = json.loads(line)
             except: continue
-            # Eerste user-message-content
-            if entry.get('type') == 'message' and entry.get('role') == 'user':
-                content = entry.get('content', '')
-                if isinstance(content, list):
-                    content = ' '.join(c.get('text', '') for c in content if isinstance(c, dict))
-                if content and len(str(content)) > 5:
-                    # Pak eerste 60 chars, slugify
-                    words = str(content)[:80].lower()
-                    import re
-                    slug = re.sub(r'[^a-z0-9]+', '-', words).strip('-')[:40]
-                    if slug:
-                        print(slug)
-                        break
+            txt = user_text(entry)
+            # Sla tool-result-turns en system-reminder-wrappers over
+            if txt and len(txt) > 5 and not txt.startswith('<'):
+                slug = re.sub(r'[^a-z0-9]+', '-', txt[:80].lower()).strip('-')[:40]
+                if slug:
+                    print(slug)
+                    break
 except Exception:
     pass
 PYEOF
@@ -92,8 +99,8 @@ fi
 
 slug="${session_focus:-session}"
 raw_path="wiki/30-sessions/raw/${timestamp}-${slug}.md"
-processed_path="wiki/30-sessions/${today}-${slug}.md"
-mkdir -p "wiki/30-sessions/raw" "wiki/30-sessions"
+processed_path="wiki/30-sessions/processed/${today}-${slug}.md"
+mkdir -p "wiki/30-sessions/raw" "wiki/30-sessions/processed"
 
 # === Stap 1: RAW log (gitignored — kan secrets bevatten via transcript) ===
 {
@@ -114,16 +121,23 @@ mkdir -p "wiki/30-sessions/raw" "wiki/30-sessions"
         echo ""
         python3 - <<PYEOF 2>/dev/null || echo "(geen prompt gevonden)"
 import json
+
+def user_text(e):
+    if e.get('type') != 'user':
+        return ''
+    c = (e.get('message') or {}).get('content', '')
+    if isinstance(c, list):
+        c = ' '.join(x.get('text', '') for x in c if isinstance(x, dict) and x.get('type') == 'text')
+    return str(c or '').strip()
+
 try:
     with open("${transcript_path}") as f:
         for line in f:
             try: e = json.loads(line)
             except: continue
-            if e.get('type') == 'message' and e.get('role') == 'user':
-                c = e.get('content', '')
-                if isinstance(c, list):
-                    c = ' '.join(x.get('text', '') for x in c if isinstance(x, dict))
-                print(str(c)[:800])
+            t = user_text(e)
+            if t and len(t) > 5 and not t.startswith('<'):
+                print(t[:800])
                 break
 except Exception as ex:
     print(f"(error: {ex})")
@@ -139,12 +153,17 @@ try:
         for line in f:
             try: e = json.loads(line)
             except: continue
-            if e.get('type') == 'tool_use' and e.get('name') in ('Edit', 'Write', 'MultiEdit'):
-                inp = e.get('input', {})
-                fp = inp.get('file_path')
-                if fp and fp not in files_seen:
-                    files_seen.add(fp)
-                    print(f"- {e['name']}: {fp}")
+            # tool_use-blokken zitten genest in assistant message.content
+            if e.get('type') != 'assistant':
+                continue
+            for c in (e.get('message') or {}).get('content', []):
+                if not isinstance(c, dict):
+                    continue
+                if c.get('type') == 'tool_use' and c.get('name') in ('Edit', 'Write', 'MultiEdit'):
+                    fp = (c.get('input') or {}).get('file_path')
+                    if fp and fp not in files_seen:
+                        files_seen.add(fp)
+                        print(f"- {c['name']}: {fp}")
 except Exception as ex:
     print(f"(error: {ex})")
 PYEOF
@@ -187,7 +206,7 @@ PYEOF
     echo ""
     echo "---"
     echo ""
-    echo "_Raw transcript-data in [\`raw/${timestamp}-${slug}.md\`](raw/${timestamp}-${slug}.md) (gitignored)._"
+    echo "_Raw transcript-data in [\`raw/${timestamp}-${slug}.md\`](../raw/${timestamp}-${slug}.md) (gitignored)._"
 } > "${processed_path}"
 
 # === Stap 3: Schrijf ingest-marker ===
