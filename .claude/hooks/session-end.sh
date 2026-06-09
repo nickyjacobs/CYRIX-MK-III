@@ -99,7 +99,7 @@ fi
 
 slug="${session_focus:-session}"
 raw_path="wiki/30-sessions/raw/${timestamp}-${slug}.md"
-processed_path="wiki/30-sessions/processed/${today}-${slug}.md"
+processed_path="wiki/30-sessions/processed/${timestamp}-${slug}.md"
 mkdir -p "wiki/30-sessions/raw" "wiki/30-sessions/processed"
 
 # === Stap 1: RAW log (gitignored — kan secrets bevatten via transcript) ===
