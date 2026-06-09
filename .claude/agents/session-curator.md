@@ -55,7 +55,7 @@ Per bucket print een gestructureerd plan:
         "2026-06-09 — SessionEnd hook auto-commit scope"
 
 ### Project updates (1)
-- UPD  wiki/10-projects/cyrix-mk-iii/README.md
+- UPD  wiki/10-projects/CYRIX-MK-III/README.md
        Sectie "Recente voortgang": fase 2 deliverables landed
 
 ### MEMORY (1 nieuwe, 0 updates)
@@ -93,7 +93,7 @@ Geef een samenvatting per sessie:
 ✓ wiki/30-sessions/raw/2026-06-09-1603-foo.md
   - 2 knowledge notes geschreven
   - 1 decision toegevoegd
-  - cyrix-mk-iii project-README bijgewerkt
+  - CYRIX-MK-III project-README bijgewerkt
   - MEMORY.md: 1 nieuw inzicht
   - 0 archives
   - Verplaatst naar raw/processed/
@@ -105,7 +105,7 @@ Bij twijfel — onderstaande markers helpen:
 
 - **Knowledge** als de inhoud gaat over **hoe iets werkt** of **een patroon**: woorden als "patroon", "werkt zo", "lesson learned", "gotcha", technische uitleg
 - **Decision** als er een keuze gemaakt is met onderbouwing: woorden als "besloten", "we kiezen", "trade-off", expliciete ja/nee
-- **Project-update** als specifieke project genoemd wordt (cyrix-mk-iii, OSCP, homelab, etc.) met voortgang-claim
+- **Project-update** als specifieke project genoemd wordt (CYRIX-MK-III, OSCP, homelab, etc.) met voortgang-claim
 - **Memory** als het persoonlijke voorkeur, terugkerende fout, of meta-instructie is: "ik wil altijd", "vergeet niet om", "voortaan"
 
 Bij **multi-bucket content**: kies de primaire bucket, voeg cross-references toe via wikilinks.
