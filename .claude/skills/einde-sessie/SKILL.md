@@ -16,14 +16,19 @@ description: Sluit de huidige sessie af en verwerk de kennis naar de wiki. Schri
 
 ## Hoe het werkt
 
-### Stap 1 — Focus bevestigen
+### Stap 1 — Focus bepalen
 
+**Interactive mode** (handmatige aanroep of `--interactive`):
 Vraag aan gebruiker: *"De focus van deze sessie was [X]. Klopt dat, of moet ik dit aanpassen?"*
 
-Leid de focus af uit:
+**Automatic mode** (via Stop-hook of `--auto`):
+Geen bevestiging vragen — focus direct afleiden, log schrijven, melden wat geschreven is.
+
+In beide modi leid je de focus af uit:
 - De eerste user-prompt van de sessie
 - De Plan/TaskList als die gebruikt is
 - De grootste cluster wijzigingen (git diff)
+- TaskList completion-state (welke tasks zijn afgerond)
 
 ### Stap 2 — Vervang eventuele stub
 
@@ -102,9 +107,18 @@ Sessie afgesloten:
 - **Optioneel:** `--focus=<korte slug>` — override de auto-gedetecteerde focus
 - **Optioneel:** `--no-merge` — schrijf alleen sessie-log, sla MEMORY/decisions/wiki update over
 - **Optioneel:** `--dry-run` — toon wat geschreven zou worden zonder schrijven
+- **Optioneel:** `--interactive` of `--auto` — forceer mode (default: interactive bij directe aanroep, auto bij Stop-hook)
 
-## Trigger
+## Trigger en mode-detectie
 
-- **Automatisch** via `.claude/hooks/stop-einde-sessie.sh` bij sessies met >5 tool-uses
-- **Handmatig** door `/einde-sessie` of door te zeggen "einde sessie"
-- **Geforceerd** bij `--force` (zelfs voor triviale sessies)
+| Trigger | Mode | Bevestiging vragen? |
+|---|---|---|
+| Stop-hook (substantiële sessie zonder /einde-sessie) | automatic | Nee — schrijf direct |
+| Gebruiker zegt `/einde-sessie` of "einde sessie" | interactive | Ja — bevestig focus en geef preview |
+| `/einde-sessie --auto` | automatic | Nee |
+| `/einde-sessie --interactive` | interactive | Ja |
+| `/einde-sessie --force` | automatic | Nee — ook bij triviale sessies |
+
+## Conflict-resolutie bij stub
+
+Als Stop-hook eerder een `wiki/30-sessions/YYYY-MM-DD-onafgesloten.md` schreef en je roept later `/einde-sessie` aan: **vervang** de stub volledig met de formele log. Geen merge — een formele log is altijd autoritatiever dan een stub.

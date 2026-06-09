@@ -16,11 +16,13 @@ Lazy-lookup catalogus. Begin hier, open maximaal 3 sub-pagina's per vraag.
 ## 📋 Context
 *Wie ben ik, wat doe ik, waar werk ik naartoe*
 
-- [[00-context/me|Profiel]]
-- [[00-context/work|Werk]]
-- [[00-context/team|Team]]
-- [[00-context/current-priorities|Huidige prioriteiten]]
-- [[00-context/goals|Doelen en mijlpalen]]
+- [[00-context/me.example|Profiel]] · *(kopieer naar `me.md`)*
+- [[00-context/work.example|Werk]]
+- [[00-context/team.example|Team]]
+- [[00-context/current-priorities.example|Huidige prioriteiten]]
+- [[00-context/goals.example|Doelen en mijlpalen]]
+
+> Bij eerste setup: kopieer elk `.example.md` naar `<naam>.md` en vul je eigen data in. De `.md` versies zijn gitignored, blijven dus lokaal.
 
 </div>
 

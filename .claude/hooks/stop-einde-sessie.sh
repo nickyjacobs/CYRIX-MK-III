@@ -12,7 +12,7 @@ cd "${REPO_ROOT}"
 # Stop hook ontvangt JSON via stdin met sessie-context
 stdin_data=$(cat 2>/dev/null || echo "{}")
 
-# Bepaal aantal tool uses (drempel voor "substantieel")
+# Bepaal aantal tool uses (één van twee signalen voor "substantieel")
 tool_uses=$(echo "${stdin_data}" | python3 -c "
 import json, sys
 try:
@@ -22,8 +22,21 @@ except Exception:
     print(0)
 " 2>/dev/null || echo "0")
 
-# Triviale sessie: geen stub
-if [[ "${tool_uses}" -lt 5 ]]; then
+# Detectie "substantieel": twee signalen, OR-logica
+# Signaal A: content-wijzigingen in tracked folders (echte werk)
+content_changes=0
+if [[ -d .git ]]; then
+    content_changes=$(git status --porcelain wiki/ docs/ .claude/ scripts/ *.md 2>/dev/null | wc -l | tr -d ' ')
+fi
+
+# Signaal B: lange sessie (>= 10 tool-uses, ook zonder content-changes)
+long_session=0
+if [[ "${tool_uses}" -ge 10 ]]; then
+    long_session=1
+fi
+
+# Triviale sessie: <3 tool-uses (snelle vraag/antwoord) OF geen van beide signalen
+if [[ "${tool_uses}" -lt 3 ]] || ( [[ "${content_changes}" -eq 0 ]] && [[ "${long_session}" -eq 0 ]] ); then
     exit 0
 fi
 
