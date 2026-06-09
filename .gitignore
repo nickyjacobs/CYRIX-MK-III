@@ -1,42 +1,90 @@
-# Persoonlijke context (niet in publieke repo)
+# =============================================================
+# CYRIX MK-III .gitignore
+# =============================================================
+# Strategie: persoonlijke + gevoelige data lokaal houden, examples + skeletons committable.
+# Auto-commit door SessionEnd hook respecteert deze regels.
+
+# --- Persoonlijke context (niet in publieke repo) ---
 context-private/
 CLAUDE.local.md
 *.local.md
 .mcp.local.json
 .claude/rules-private/
 
-# Persoonlijke wiki-content — sessies, audits, archives (skeleton-folder blijft via .gitkeep)
+# --- Wiki: sessions (gefaseerd: raw lokaal, processed committable) ---
+# Root sessions/-files: alles lokaal (handmatige writes, stubs etc.)
 wiki/30-sessions/*
 !wiki/30-sessions/.gitkeep
+!wiki/30-sessions/raw/
+!wiki/30-sessions/processed/
+# Raw transcripts: NOOIT in publieke repo (kunnen secrets bevatten)
+wiki/30-sessions/raw/*
+!wiki/30-sessions/raw/.gitkeep
+# Processed sessions: committable — gedistilleerde versie, secrets zijn weg
+# (geen patroon nodig)
+
+# --- Wiki: andere persoonlijke content ---
 wiki/60-audits/*
 !wiki/60-audits/.gitkeep
 
-# Persoonlijke wiki-content — context (examples wel commiten)
+# Wiki context (examples committable, echte data lokaal)
 wiki/00-context/*.md
 !wiki/00-context/*.example.md
 !wiki/00-context/index.md
 
-# Persoonlijke wiki-content — decisions log (example wel committen)
+# Wiki decisions log (example committable, echte log lokaal)
 wiki/50-decisions/log.md
 
-# Obsidian per-user state
-.obsidian/workspace*
-.obsidian/workspace-mobile*
-.trash/
+# --- Obsidian per-user state (nested directories ondersteund) ---
+**/.obsidian/workspace*
+**/.obsidian/workspace-mobile*
+**/.obsidian/cache
+**/.trash/
 
-# Secrets / env
+# --- Secrets / credentials (defensief, niet te breed) ---
 .env
-.env.local
+.env.*
+!.env.example
 *.key
 *.pem
+*.p12
+*.pfx
+*.ovpn
+*.credentials
+# 'secrets' alleen folder-namen, niet substrings in file-namen zoals 'secret-scan.sh'
+**/credentials/
+**/secrets/
 
-# Temp / scratch
+# --- Naming-patroon: private files (alleen rules-private/ en context-private/) ---
+# Specifiek targetten ipv breed substring-pattern
+context-private/
+.claude/rules-private/
+# Files met letterlijk "private" of "secret" als woord (niet als deel van naam zoals "secret-scan")
+**/*.private.md
+**/*.private.json
+
+# --- Temp / scratch ---
 .tmp/
 *.swp
 *~
+*.bak
 
-# OS / editor
+# --- OS / editor ---
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
+
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+venv/
+.venv/
+
+# --- Node (mochten we ooit JS gebruiken) ---
+node_modules/
+npm-debug.log
+yarn-error.log
