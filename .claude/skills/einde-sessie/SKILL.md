@@ -1,18 +1,28 @@
 ---
 name: einde-sessie
-description: Sluit de huidige sessie af en verwerk de kennis naar de wiki. Schrijft sessie-log, merget inzichten naar MEMORY.md, appendt besluiten aan decisions/log.md, en update betroffen wiki-pagina's. Triggert automatisch via Stop-hook bij substantiële sessies, kan ook handmatig.
+description: Handmatige sessie-afsluiting met interactieve focus-bevestiging. Voor wanneer je de auto-pipeline (SessionEnd hook → /process-sessions) wil overschrijven met een eigen focus, custom slug, of preview van wat geschreven wordt. Voor automatische afsluiting hoef je deze skill NIET aan te roepen — SessionEnd hook doet dat automatisch.
 ---
 
 # /einde-sessie
 
-## Wanneer gebruiken
+> **Belangrijk:** sinds de auto-pipeline live is, hoef je deze skill **niet** standaard te gebruiken. SessionEnd hook (`.claude/hooks/session-end.sh`) handelt automatische sessie-afsluiting af bij sessie-einde. Deze skill is voor **handmatige override**.
 
-- Aan het einde van een werksessie die substantiële kennis of voortgang opleverde
-- Wanneer een besluit genomen is dat geregistreerd moet worden
-- Bij wisseling naar een ander onderwerp binnen één sessie (mini-afsluiting)
-- Automatisch via Stop-hook bij sessies > 5 tool-uses
+## Verhouding tot auto-pipeline
 
-**Niet voor:** triviale sessies (één vraag, één antwoord). De Stop-hook detecteert dit.
+| Trigger | Wie doet het | Bevestiging? |
+|---|---|---|
+| Sessie-einde (clear/resume/logout) | SessionEnd hook → schrijft raw + processed log automatisch | Nee |
+| Periodieke distillatie | `/process-sessions` skill → roept session-curator agent aan | Ja (per bucket) |
+| Handmatig — directe afsluiting met custom focus | **`/einde-sessie` (deze skill)** | Ja |
+
+## Wanneer wel deze skill gebruiken
+
+- Je wil de focus **expliciet vastleggen** voor de sessie-log (override van auto-detected slug)
+- Je wil een **preview** zien van wat de SessionEnd hook ZOU schrijven (`--dry-run`)
+- Je wil **interactief** door de extractie-stappen lopen
+- Je wil de sessie-log nu schrijven zonder te wachten op sessie-einde (bv. voor je `/clear` doet)
+
+**Niet voor:** triviale sessies, of als auto-pipeline al voldoet.
 
 ## Hoe het werkt
 
