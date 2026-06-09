@@ -26,9 +26,11 @@ fi
 # Current priorities
 if [[ -f wiki/00-context/current-priorities.md ]]; then
     echo "## Huidige prioriteiten"
-    awk '/^## Top prioriteiten/,/^## /' wiki/00-context/current-priorities.md \
-        | grep -v '^## ' \
-        | head -n 20
+    # Pak de inhoud onder "## Top prioriteiten" tot de volgende ## heading.
+    # Range-overlap vermijden: zet vlag aan ná de header, uit bij de volgende heading.
+    awk '/^## Top prioriteiten/{f=1; next} /^## /{f=0} f' \
+        wiki/00-context/current-priorities.md \
+        | head -n 20 || true
     echo ""
 fi
 
