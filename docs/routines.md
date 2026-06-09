@@ -24,7 +24,7 @@ Findings landen in `wiki/60-audits/`. Escalerend mechanisme: ongelegen findings 
 
 - Claude Code v2.x of nieuwer (`claude --version`)
 - Actief Claude.ai account (cloud-toegang)
-- Repo `cyrix-mk-iii` gecloned met `.claude/agents/wiki-librarian.md` aanwezig
+- Repo `CYRIX-MK-III` gecloned met `.claude/agents/wiki-librarian.md` aanwezig
 - `.env` of shell-env met `GITHUB_TOKEN` (voor commit-toegang vanuit cloud)
 
 ### Routine 1 — daily
@@ -34,7 +34,7 @@ claude routine create \
   --name cyrix-wiki-audit-daily \
   --schedule "0 9 * * *" \
   --timezone Europe/Amsterdam \
-  --repo nickyjacobs/cyrix-mk-iii \
+  --repo nickyjacobs/CYRIX-MK-III \
   --prompt "@wiki-librarian daily — schrijf de audit naar wiki/60-audits/ en commit + push het rapport met message 'wiki: daily audit YYYY-MM-DD'"
 ```
 
@@ -45,7 +45,7 @@ claude routine create \
   --name cyrix-wiki-audit-weekly \
   --schedule "0 18 * * 0" \
   --timezone Europe/Amsterdam \
-  --repo nickyjacobs/cyrix-mk-iii \
+  --repo nickyjacobs/CYRIX-MK-III \
   --prompt "@wiki-librarian weekly — schrijf de audit naar wiki/60-audits/ en commit + push het rapport met message 'wiki: weekly audit YYYY-MM-DD'"
 ```
 
@@ -56,7 +56,7 @@ claude routine create \
   --name cyrix-wiki-audit-monthly \
   --schedule "0 18 1 * *" \
   --timezone Europe/Amsterdam \
-  --repo nickyjacobs/cyrix-mk-iii \
+  --repo nickyjacobs/CYRIX-MK-III \
   --prompt "@wiki-librarian monthly — schrijf de audit naar wiki/60-audits/ en commit + push het rapport met message 'wiki: monthly audit YYYY-MM-DD'"
 ```
 
@@ -95,7 +95,7 @@ Lokaal alternatief via `launchd` op macOS (handmatig opgezet, MacBook moet aan s
 
 ```bash
 # Voorbeeld plist in ~/Library/LaunchAgents/com.cyrix.wiki-audit-daily.plist
-# Roept aan: claude -p "@wiki-librarian daily" in cyrix-mk-iii directory
+# Roept aan: claude -p "@wiki-librarian daily" in CYRIX-MK-III directory
 ```
 
 Zie `scripts/launchd/` voor template plists (komt in fase 2).

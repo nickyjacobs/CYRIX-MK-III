@@ -23,8 +23,8 @@ After "Use this template":
 
 ```bash
 # 1. Clone your fork
-git clone https://github.com/<you>/cyrix-mk-iii.git
-cd cyrix-mk-iii
+git clone https://github.com/<you>/CYRIX-MK-III.git
+cd CYRIX-MK-III
 
 # 2. Run setup (interactive)
 bash scripts/setup.sh
@@ -45,7 +45,7 @@ SessionStart hook automatically injects your MEMORY, current priorities, and las
 ## Architecture in one diagram
 
 ```
-cyrix-mk-iii/
+CYRIX-MK-III/
 ├── CLAUDE.md              public template instructions
 ├── CLAUDE.local.md        your identity + @imports (gitignored)
 ├── MEMORY.md              persistent insights (auto-managed by /einde-sessie)

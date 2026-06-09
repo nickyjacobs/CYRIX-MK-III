@@ -1,6 +1,6 @@
 # CYRIX MK-III — Verificatie fase 1
 
-> Status: 2026-06-09 (laatste update na review-rondes) · Repo: https://github.com/nickyjacobs/cyrix-mk-iii
+> Status: 2026-06-09 (laatste update na review-rondes) · Repo: https://github.com/nickyjacobs/CYRIX-MK-III
 
 ## Automatische tests (PASS)
 
@@ -20,7 +20,7 @@ Manueel uitgevoerd `bash .claude/hooks/session-start.sh` — dumpt MEMORY, prior
 
 ### ✅ Privacy: persoonlijke data niet op GitHub
 
-`gh api repos/nickyjacobs/cyrix-mk-iii/contents/wiki/00-context` levert alleen 5 `.example.md` files. Echte `me.md`, `work.md`, `team.md`, `current-priorities.md`, `goals.md` zijn lokaal aanwezig maar gitignored. Ook `wiki/50-decisions/log.md` blijft lokaal.
+`gh api repos/nickyjacobs/CYRIX-MK-III/contents/wiki/00-context` levert alleen 5 `.example.md` files. Echte `me.md`, `work.md`, `team.md`, `current-priorities.md`, `goals.md` zijn lokaal aanwezig maar gitignored. Ook `wiki/50-decisions/log.md` blijft lokaal.
 
 ### ✅ Pre-edit hook blokkeert secrets
 
@@ -42,11 +42,11 @@ Test-input met "essentieel", "proactief", "baanbrekend", "passie", em-dash → 5
 
 ## Handmatige checks (vragen jouw actie)
 
-Loop deze door in een nieuwe `claude` sessie binnen `~/Desktop/Agentic AI Workflows/My/cyrix-mk-iii/`:
+Loop deze door in een nieuwe `claude` sessie binnen `~/Desktop/Agentic AI Workflows/My/CYRIX-MK-III/`:
 
 ### ☐ Check 1: SessionStart in echte sessie
 
-1. `cd ~/Desktop/Agentic\ AI\ Workflows/My/cyrix-mk-iii`
+1. `cd ~/Desktop/Agentic\ AI\ Workflows/My/CYRIX-MK-III`
 2. `claude`
 3. Verwacht: MEMORY-content + huidige prioriteiten + last sessions verschijnen automatisch bovenaan sessie
 
@@ -77,7 +77,7 @@ Loop deze door in een nieuwe `claude` sessie binnen `~/Desktop/Agentic AI Workfl
 
 ### ☐ Check 6: Obsidian opent wiki/
 
-1. Obsidian → "Open folder as vault" → kies `~/Desktop/Agentic AI Workflows/My/cyrix-mk-iii/wiki/`
+1. Obsidian → "Open folder as vault" → kies `~/Desktop/Agentic AI Workflows/My/CYRIX-MK-III/wiki/`
 2. Verwacht: 
    - `index.md` opent als landingspagina
    - Wikilinks `[[00-context/me]]` werken
@@ -91,7 +91,7 @@ Loop deze door in een nieuwe `claude` sessie binnen `~/Desktop/Agentic AI Workfl
 ### ☐ Check 8: GitHub-template testfork
 
 1. Login met een tweede GitHub-account (of incognito)
-2. Ga naar https://github.com/nickyjacobs/cyrix-mk-iii → "Use this template"
+2. Ga naar https://github.com/nickyjacobs/CYRIX-MK-III → "Use this template"
 3. Verwacht: 
    - Skelet wordt gefork zonder persoonlijke data
    - Alleen `.example.md` files zichtbaar in `wiki/00-context/`
@@ -128,7 +128,7 @@ Loop deze door in een nieuwe `claude` sessie binnen `~/Desktop/Agentic AI Workfl
 
 Fase 1 deliverables uit het plan:
 
-- [x] Repo aangemaakt (`nickyjacobs/cyrix-mk-iii`, publiek, template-enabled)
+- [x] Repo aangemaakt (`nickyjacobs/CYRIX-MK-III`, publiek, template-enabled)
 - [x] Repo skeleton + `.gitignore` + `.mcp.json` + `.claude/rules/`
 - [x] Wiki-vault skeleton + `index.md` bento-grid + `_templates/`
 - [x] MCP servers geconfigureerd (GitHub + Tavily; HA via `.env.example` placeholder)

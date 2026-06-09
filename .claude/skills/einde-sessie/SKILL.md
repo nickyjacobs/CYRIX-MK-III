@@ -89,10 +89,10 @@ Geef gebruiker:
 
 ```
 Sessie afgesloten:
-- Log: wiki/30-sessions/2026-06-09-cyrix-mk-iii-fase1.md
+- Log: wiki/30-sessions/2026-06-09-CYRIX-MK-III-fase1.md
 - MEMORY: 2 nieuwe inzichten, 1 update
 - Decisions: 1 besluit toegevoegd
-- Updates: wiki/10-projects/cyrix-mk-iii/README.md
+- Updates: wiki/10-projects/CYRIX-MK-III/README.md
 ```
 
 ## Gedrag
