@@ -67,7 +67,7 @@ cyrix-mk-iii/
 │   └── 90-archives/       superseded/old content (never delete)
 ├── docs/                  routines setup, verification checklist
 ├── integrations/          external integrations (e.g. dutchquill/)
-└── scripts/               validate.py, check_verboden_woorden.py, setup.sh
+└── scripts/               validate.py, check_verboden_woorden.py, setup.sh, statusline.example.sh
 ```
 
 ## Skills
@@ -92,6 +92,35 @@ cyrix-mk-iii/
 - **Stop (smart-trigger)** — runs `/einde-sessie` automatically when substantial work happened (content changes OR ≥10 tool-uses)
 - **PreToolUse (Edit\|Write\|MultiEdit)** — hard-blocks secrets in new content
 - **PostToolUse (Edit\|Write\|MultiEdit)** — re-scans disk, runs Dutch style advisory on relevant files
+
+## Optional features
+
+### Statusline (recommended)
+
+CYRIX MK-III ships with a statusline template at [`scripts/statusline.example.sh`](scripts/statusline.example.sh). It shows on two lines:
+
+- **Line 1:** project folder · git branch (green/yellow if dirty) · session name
+- **Line 2:** model · effort · context-bar with percentage · tokens · 5h/7d rate-limits · compact/clear hint at ≥70% context
+
+**Activate globally** (all Claude Code sessions):
+
+```bash
+cp scripts/statusline.example.sh ~/.claude/statusline-command.sh
+chmod +x ~/.claude/statusline-command.sh
+# Add to ~/.claude/settings.json:
+#   "statusLine": { "type": "command", "command": "bash ~/.claude/statusline-command.sh" }
+```
+
+**Activate per-project** (only in this repo):
+
+```bash
+cp scripts/statusline.example.sh .claude/statusline.sh
+chmod +x .claude/statusline.sh
+# Add to .claude/settings.json:
+#   "statusLine": { "type": "command", "command": "bash .claude/statusline.sh" }
+```
+
+The hint thresholds and color codes are easy to tweak — edit the `_rl_color` function and the `used_pct_int` checks at the bottom of the script.
 
 ## Cloud routines (optional)
 
