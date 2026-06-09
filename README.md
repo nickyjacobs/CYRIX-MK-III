@@ -1,5 +1,19 @@
 # CYRIX MK-III
 
+<!--
+  Image hosted on GitHub user-attachments — for permanent stability, download
+  manually via browser and replace src with assets/cyrix-logo.png
+-->
+<img width="1024" height="1024" alt="CYRIX" src="https://github.com/user-attachments/assets/34e4122b-3419-4260-9ee4-0f3c6d845c26" />
+
+![Claude Code](https://img.shields.io/badge/Claude_Code-Integrated-5C4EE5)
+![CYRIX](https://img.shields.io/badge/CYRIX-MK--III-0f0f0f)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Template](https://img.shields.io/badge/GitHub-Template-blue)
+![Status](https://img.shields.io/badge/Status-Active-success)
+![Wiki-LLM](https://img.shields.io/badge/Pattern-Wiki--LLM-7E57C2)
+![Auto-Session](https://img.shields.io/badge/Auto--Session-Pipeline-FF8A65)
+
 > Personal executive assistant template for [Claude Code](https://code.claude.com), built around a Karpathy-style wiki-LLM pattern, automated session-closure, and disciplined doc-ingest workflows.
 
 **Status:** active development (fase 1 deliverables landed 2026-06-09). Template-safe — fork it, run `scripts/setup.sh`, fill in your context.
