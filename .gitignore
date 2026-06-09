@@ -4,11 +4,19 @@ CLAUDE.local.md
 *.local.md
 .mcp.local.json
 
-# Persoonlijke wiki-content (skeleton-folder blijft via .gitkeep)
+# Persoonlijke wiki-content — sessies, audits, archives (skeleton-folder blijft via .gitkeep)
 wiki/30-sessions/*
 !wiki/30-sessions/.gitkeep
 wiki/60-audits/*
 !wiki/60-audits/.gitkeep
+
+# Persoonlijke wiki-content — context (examples wel commiten)
+wiki/00-context/*.md
+!wiki/00-context/*.example.md
+!wiki/00-context/index.md
+
+# Persoonlijke wiki-content — decisions log (example wel committen)
+wiki/50-decisions/log.md
 
 # Obsidian per-user state
 .obsidian/workspace*
