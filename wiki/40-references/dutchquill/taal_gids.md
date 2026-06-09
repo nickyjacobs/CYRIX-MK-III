@@ -1,3 +1,15 @@
+---
+title: DutchQuill — Taalgids (d/t/dt)
+source-url: https://github.com/nickyjacobs/dutchquill-ai/blob/main/workflows/taal_gids.md
+ingest-date: 2026-06-09
+review-date: 2026-09-09
+tags: [reference, dutchquill, writing, nederlands]
+category: 40-references
+status: active
+license: MIT
+attribution: DutchQuill AI Contributors
+---
+
 # Taalgids — Nederlandse Hogeschoolrapporten
 
 Hardcoded referentiegids op basis van Scribbr NL (scribbr.nl/category/taalregels-schrijftips/).

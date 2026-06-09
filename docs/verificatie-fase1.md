@@ -1,8 +1,18 @@
 # CYRIX MK-III — Verificatie fase 1
 
-> Status: 2026-06-09 · Repo: https://github.com/nickyjacobs/cyrix-mk-iii
+> Status: 2026-06-09 (laatste update na review-rondes) · Repo: https://github.com/nickyjacobs/cyrix-mk-iii
 
 ## Automatische tests (PASS)
+
+### Round 2 — uitgebreide checks (na review-fix-rondes)
+
+- ✅ Privacy: 5 `.example.md` files op github, geen persoonlijke `me.md`/`work.md`/etc, `.claude/rules-private` 404 (gitignored werkt)
+- ✅ Frontmatter: 33/33 wiki `.md` files met geldige YAML frontmatter (DutchQuill copies fixed)
+- ✅ Stop-hook smart-trigger: triviale sessies (<3 tool-uses) genereren géén stub — geverifieerd met fake stdin
+- ✅ Pre-edit hook: blokkeert fake GitHub PAT (exit 2), laat clean tekst door (exit 0)
+- ✅ check_verboden_woorden.py: 4/5 hits gevonden in test-tekst (woord-match + em-dash detection)
+
+### Round 1 — eerste automatische tests
 
 ### ✅ SessionStart hook draait standalone
 
@@ -106,9 +116,15 @@ Loop deze door in een nieuwe `claude` sessie binnen `~/Desktop/Agentic AI Workfl
 
 ---
 
+## Bekende limitaties (niet-blokkerend)
+
+- **`check_verboden_woorden.py`**: vangt geen verbuigingen — "proactief" wel, "proactieve" niet. Fase 2 polish: NL stemmer of expliciete verbuigingsmatchers per woord.
+- **`wiki-librarian._tracking.md` escalation**: nog niet in praktijk getest, eerste maand observeren.
+- **Bento-grid CSS**: alleen actief als snippet `bento-grid.css` ingeschakeld is in Obsidian Settings → Appearance → CSS snippets.
+
 ## Conclusie fase 1
 
-**6 automatische tests PASS.** 8 handmatige checks staan klaar om door te lopen in een verse Claude Code sessie binnen MK-III.
+**11 automatische tests PASS** (6 round-1 + 5 round-2). 8 handmatige checks staan klaar om door te lopen in een verse Claude Code sessie binnen MK-III. De **kritieke 5 die alleen jij kunt doen** (sessie-start in echte Claude Code, /search, /ingest, /einde-sessie, /dutch-write, Obsidian vault open, testfork) staan onder "Handmatige checks" hierboven.
 
 Fase 1 deliverables uit het plan:
 

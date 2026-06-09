@@ -1,3 +1,15 @@
+---
+title: DutchQuill — Humanize NL gids
+source-url: https://github.com/nickyjacobs/dutchquill-ai/blob/main/workflows/humanize_nl_gids.md
+ingest-date: 2026-06-09
+review-date: 2026-09-09
+tags: [reference, dutchquill, writing, nederlands]
+category: 40-references
+status: active
+license: MIT
+attribution: DutchQuill AI Contributors
+---
+
 # Humanize NL Gids — Nederlandse AI-Patronen Vermijden
 
 Referentiegids voor het detecteren en vermijden van AI-schrijfpatronen in Nederlandse teksten.

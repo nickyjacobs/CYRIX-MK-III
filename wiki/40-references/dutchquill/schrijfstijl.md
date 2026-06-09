@@ -1,3 +1,15 @@
+---
+title: DutchQuill — Schrijfstijl
+source-url: https://github.com/nickyjacobs/dutchquill-ai/blob/main/.claude/rules/schrijfstijl.md
+ingest-date: 2026-06-09
+review-date: 2026-09-09
+tags: [reference, dutchquill, writing, nederlands]
+category: 40-references
+status: active
+license: MIT
+attribution: DutchQuill AI Contributors
+---
+
 # Schrijfstijlregels - DutchQuill AI
 
 Deze regels gelden bij het genereren van Nederlandse rapporttekst. Ze zijn aanvullend op CLAUDE.md.
