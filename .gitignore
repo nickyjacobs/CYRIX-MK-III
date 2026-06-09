@@ -1,0 +1,33 @@
+# Persoonlijke context (niet in publieke repo)
+context-private/
+CLAUDE.local.md
+*.local.md
+.mcp.local.json
+
+# Persoonlijke wiki-content (skeleton-folder blijft via .gitkeep)
+wiki/30-sessions/*
+!wiki/30-sessions/.gitkeep
+wiki/60-audits/*
+!wiki/60-audits/.gitkeep
+
+# Obsidian per-user state
+.obsidian/workspace*
+.obsidian/workspace-mobile*
+.trash/
+
+# Secrets / env
+.env
+.env.local
+*.key
+*.pem
+
+# Temp / scratch
+.tmp/
+*.swp
+*~
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
