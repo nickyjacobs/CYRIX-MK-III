@@ -7,7 +7,7 @@ description: Verwerk een raw bron (tekst of URL) naar gestructureerde wiki-refer
 
 ## Wanneer gebruiken
 
-- Vendor-documentatie verwerken (Claude Code docs, Rapid7, Wazuh, n8n)
+- Vendor-documentatie verwerken (Claude Code docs, SIEM/EDR/automation tools)
 - Whitepapers, threat reports, CVE-pagina's als reference opslaan
 - Blog-posts, RFCs, certification-guides
 - Raw notities of transcripts naar gestructureerde wiki-content

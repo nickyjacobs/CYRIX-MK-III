@@ -5,7 +5,7 @@
 - **Geen `Co-Authored-By: Claude`** of vergelijkbare trailers
 - **Geen "Generated with Claude Code"** footer
 - **Geen Claude-emoji** in commit-messages
-- Commits zijn van **Nicky alleen**
+- Commits zijn van **de eigenaar alleen**
 
 ## Commits maken
 

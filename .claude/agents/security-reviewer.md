@@ -23,13 +23,14 @@ Je bent een read-only security-reviewer. Je scant bestanden op:
    - Hostnames die naar productie wijzen (`*.pqr.nl`, klant-domeinen, persoonlijke hosts)
 
 3. **Klant- en persoonsdata**
-   - Klantnamen van PQR (gebruik `<client-codenaam>` placeholders)
+   - Klantnamen (gebruik `<client-codenaam>` placeholders)
    - Volledige namen van collega's (alleen voornamen in `wiki/00-context/team.md` toegestaan)
    - Persoonlijke contactgegevens (telefoonnummers, privé-adressen, BSN-achtigen)
+   - Organisatie-specifieke namen — zie `.claude/rules-private/security-personal.md` voor wat als gevoelig geldt in deze omgeving
 
 4. **Pad-leaks**
-   - Absolute paden: `/Users/nicky/...`, `/home/.../`
-   - Lokale homelab-IPs (`10.120.x`, `vault.jacops.local`)
+   - Absolute paden: `/Users/<naam>/...`, `/home/.../`
+   - Lokale homelab-/intranet-IPs en interne hostnames — zie `.claude/rules-private/security-personal.md`
 
 ## Soft warnings (rapporteer als waarschuwing)
 

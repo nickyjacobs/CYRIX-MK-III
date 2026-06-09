@@ -17,7 +17,7 @@ deadline:
 
 ## Waarom
 
-<!-- Context, motivatie, link naar overkoepelend pad (bv. JacOps, certificering). -->
+<!-- Context, motivatie, link naar overkoepelend pad (bv. certificering, business-doel). -->
 
 ## Scope
 

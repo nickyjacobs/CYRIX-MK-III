@@ -83,7 +83,7 @@ Loop deze door in een nieuwe `claude` sessie binnen `~/Desktop/Agentic AI Workfl
 1. Login met een tweede GitHub-account (of incognito)
 2. Ga naar https://github.com/nickyjacobs/cyrix-mk-iii → "Use this template"
 3. Verwacht: 
-   - Skelet wordt gefork zonder Nicky's persoonlijke data
+   - Skelet wordt gefork zonder persoonlijke data
    - Alleen `.example.md` files zichtbaar in `wiki/00-context/`
    - `wiki/50-decisions/log.md` ontbreekt (gitignored)
    - `MEMORY.md` is leeg-template-versie
@@ -108,7 +108,7 @@ Loop deze door in een nieuwe `claude` sessie binnen `~/Desktop/Agentic AI Workfl
 
 ## Conclusie fase 1
 
-**6 automatische tests PASS.** 8 handmatige checks staan klaar voor Nicky om door te lopen in een verse Claude Code sessie binnen MK-III.
+**6 automatische tests PASS.** 8 handmatige checks staan klaar om door te lopen in een verse Claude Code sessie binnen MK-III.
 
 Fase 1 deliverables uit het plan:
 

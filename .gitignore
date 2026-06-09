@@ -3,6 +3,7 @@ context-private/
 CLAUDE.local.md
 *.local.md
 .mcp.local.json
+.claude/rules-private/
 
 # Persoonlijke wiki-content — sessies, audits, archives (skeleton-folder blijft via .gitkeep)
 wiki/30-sessions/*

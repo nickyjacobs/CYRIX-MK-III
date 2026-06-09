@@ -1,29 +1,30 @@
 # Security context
 
-Nicky is een cybersecurity professional (SOC Analyst PQR, OSCP-traject). Houd hier rekening mee:
+> Generieke template-versie voor security-professionals. Persoonlijke / organisatie-specifieke security details komen uit `CLAUDE.local.md` via @import naar `.claude/rules-private/security-personal.md`.
+>
+> Verwijder deze rule of generaliseer verder als je geen security-professional bent.
 
 ## Antwoorden
 
 - Bij security-vragen: technisch accuraat op SOC/pentest-niveau, geen oppervlakkige uitleg
 - Refereer waar relevant aan **MITRE ATT&CK** (technique IDs), **Cyber Kill Chain**, **Diamond Model**, **PTES**, **OWASP WSTG**
-- **Rapid7** is de primaire SIEM bij PQR — houd hier rekening mee bij SOC-werk
-- Bij blue + red team kennis: noem ook detectie-perspectief (welke logs, welke SIGMA-rules)
 - Voor playbooks en documentatie: volg best practices, wees specifiek
+- Specifieke SIEM, tooling en organisatie-context staan in `.claude/rules-private/security-personal.md`
 
 ## Veiligheid in deze repo
 
 - **Nooit echte secrets, IPs, tokens, klant-namen** committen — gebruik placeholders (`<target-ip>`, `<client-codenaam>`)
-- Persoonlijke en gevoelige data hoort in `context-private/` (gitignored) of in `CLAUDE.local.md`
+- Persoonlijke en gevoelige data hoort in `context-private/` (gitignored), `CLAUDE.local.md`, of `.claude/rules-private/`
 - Engagement-specifieke notes in `wiki/30-sessions/` (gitignored)
 - Bij twijfel: roep `security-reviewer` agent aan voor een scan
 
 ## Skills voor security-werk
 
 - `/search` — voor CVE-info, threat actor research, vendor advisories (Tavily → WebFetch fallback)
-- `/ingest` — voor vendor-docs (Rapid7, Wazuh, MITRE), threat reports, whitepapers
+- `/ingest` — voor vendor-docs, threat reports, whitepapers
 - `security-reviewer` (agent) — read-only secret-scan op edits
 
 ## Vertrouwelijkheid
 
-- PQR-klant-informatie is altijd vertrouwelijk — nooit in publieke repo, nooit in commits, nooit als voorbeeld
+- Klant-informatie en organisatie-specifieke details zijn altijd vertrouwelijk
 - Bij twijfel: vraag eerst, schrijf niet
