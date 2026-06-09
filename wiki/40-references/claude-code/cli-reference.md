@@ -1,3 +1,13 @@
+---
+title: Claude Code — CLI Reference
+source-url: https://code.claude.com/docs/en/cli-usage
+ingest-date: 2026-03-26
+review-date: 2026-09-09
+tags: [reference, claude-code]
+category: 40-references
+status: active
+---
+
 # CLI Reference
 
 > Bron: https://code.claude.com/docs/en/cli-usage

@@ -1,3 +1,13 @@
+---
+title: Claude Code — Skills
+source-url: https://code.claude.com/docs/en/skills
+ingest-date: 2026-03-26
+review-date: 2026-09-09
+tags: [reference, claude-code]
+category: 40-references
+status: active
+---
+
 # Skills
 
 > Bron: https://code.claude.com/docs/en/skills

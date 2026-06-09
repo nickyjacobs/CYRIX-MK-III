@@ -1,3 +1,13 @@
+---
+title: Claude Code — MCP
+source-url: https://code.claude.com/docs/en/mcp
+ingest-date: 2026-03-26
+review-date: 2026-09-09
+tags: [reference, claude-code]
+category: 40-references
+status: active
+---
+
 # MCP Servers (Model Context Protocol)
 
 > Bron: https://code.claude.com/docs/en/mcp

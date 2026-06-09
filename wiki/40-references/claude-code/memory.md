@@ -1,3 +1,13 @@
+---
+title: Claude Code — Memory
+source-url: https://code.claude.com/docs/en/memory
+ingest-date: 2026-03-26
+review-date: 2026-09-09
+tags: [reference, claude-code]
+category: 40-references
+status: active
+---
+
 # Memory (CLAUDE.md & Auto Memory)
 
 > Bron: https://code.claude.com/docs/en/memory

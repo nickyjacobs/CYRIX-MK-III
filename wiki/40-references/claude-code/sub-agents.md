@@ -1,3 +1,13 @@
+---
+title: Claude Code — Sub-agents
+source-url: https://code.claude.com/docs/en/sub-agents
+ingest-date: 2026-03-26
+review-date: 2026-09-09
+tags: [reference, claude-code]
+category: 40-references
+status: active
+---
+
 # Subagents
 
 > Bron: https://code.claude.com/docs/en/sub-agents

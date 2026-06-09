@@ -1,3 +1,13 @@
+---
+title: Claude Code — Settings
+source-url: https://code.claude.com/docs/en/settings
+ingest-date: 2026-03-26
+review-date: 2026-09-09
+tags: [reference, claude-code]
+category: 40-references
+status: active
+---
+
 # Settings
 
 > Bron: https://code.claude.com/docs/en/settings

@@ -1,35 +1,117 @@
 # CYRIX MK-III
 
-> Personal executive assistant template for [Claude Code](https://code.claude.com), built around a Karpathy-style wiki-LLM pattern, auto-session-closure, and doc-ingest workflows.
+> Personal executive assistant template for [Claude Code](https://code.claude.com), built around a Karpathy-style wiki-LLM pattern, automated session-closure, and disciplined doc-ingest workflows.
 
-**Status:** in active development (fase 1). Not yet ready as a clean template fork — see [the roadmap](#roadmap).
+**Status:** active development (fase 1 deliverables landed 2026-06-09). Template-safe — fork it, run `scripts/setup.sh`, fill in your context.
 
-## What it is
+## What is CYRIX
 
-CYRIX is a Claude Code workspace that helps you plan, organise, research, write and streamline both personal and professional workflows. It's optimised for security professionals (SOC, pentest, certifications) but the framework is general-purpose.
+CYRIX is a Claude Code workspace that helps you plan, organise, research, write and streamline both personal and professional workflows. It's optimised for security professionals (SOC, pentest, certifications) but the framework itself is general-purpose.
 
 Core ideas:
 
-- **Wiki-LLM pattern** — Obsidian-compatible vault as a subdirectory, lazy lookup via `index.md` first, max 5 pages per query.
-- **Auto session-closure** — your knowledge gets captured into the wiki and `MEMORY.md` without manual ceremony.
-- **Doc-ingest** — drop a URL, get a structured local reference with master-index, frontmatter and review-date.
-- **Wiki audits** — daily/weekly/monthly cloud routines lint the wiki and flag stale or broken content.
-- **Tavily quota-fallback** — search degrades gracefully to WebFetch + WebSearch instead of erroring.
-- **DutchQuill integration** — Dutch writing style guides imported as references, applied via a dedicated skill.
-
-## Architecture
-
-See [`docs/architecture.md`](docs/architecture.md) (coming in fase 1).
+- **Wiki-LLM pattern** — Obsidian-compatible vault as a subdirectory, lazy-lookup via `wiki/index.md` first (max 5 pages per question, grep fallback).
+- **Auto session-closure** — Stop-hook triggers `/einde-sessie` when substantial work happened, writing knowledge to wiki + merging into `MEMORY.md` without manual ceremony.
+- **Doc-ingest** — `/ingest <URL>` crawls multi-page docs into structured local references with master-index, frontmatter, and review-date.
+- **Wiki audits** — daily/weekly/monthly cloud routines lint the wiki for broken links, stale references, missing frontmatter, archives candidates.
+- **Tavily quota-fallback** — `/search` skill degrades gracefully to WebFetch + WebSearch instead of erroring.
+- **DutchQuill integration** — Dutch writing style guides imported as references (MIT), applied via `/dutch-write` skill.
 
 ## Quick start
 
-> Not yet — once fase 1 lands, a `scripts/setup.sh` will walk you through it.
+After "Use this template":
+
+```bash
+# 1. Clone your fork
+git clone https://github.com/<you>/cyrix-mk-iii.git
+cd cyrix-mk-iii
+
+# 2. Run setup (interactive)
+bash scripts/setup.sh
+
+# 3. Fill in your data
+#    - wiki/00-context/me.md, work.md, team.md, current-priorities.md, goals.md
+#    - .env (Tavily, GitHub, optional Home Assistant keys)
+#    - CLAUDE.local.md (your name, preferences)
+
+# 4. Open Obsidian → "Open folder as vault" → wiki/
+
+# 5. Start a Claude Code session
+claude
+```
+
+SessionStart hook automatically injects your MEMORY, current priorities, and last session summary.
+
+## Architecture in one diagram
+
+```
+cyrix-mk-iii/
+├── CLAUDE.md              public template instructions
+├── CLAUDE.local.md        your identity + @imports (gitignored)
+├── MEMORY.md              persistent insights (auto-managed by /einde-sessie)
+├── .claude/
+│   ├── rules/             5 public rules (writing, security, commits, comms)
+│   ├── rules-private/     personal overrides (gitignored)
+│   ├── skills/            /search, /ingest, /einde-sessie, /dutch-write
+│   ├── agents/            security-reviewer, wiki-librarian
+│   ├── hooks/             SessionStart, Stop, pre/post-edit secret scans
+│   └── settings.json      hook configuration
+├── wiki/                  Obsidian-compatible vault (lazy-lookup)
+│   ├── 00-context/        profile, work, team, priorities, goals
+│   ├── 10-projects/       active projects
+│   ├── 20-knowledge/      knowledge notes (Zettelkasten-style)
+│   ├── 30-sessions/       auto-generated session logs (gitignored)
+│   ├── 40-references/     doc-ingest output
+│   ├── 50-decisions/      append-only decisions log
+│   ├── 60-audits/         wiki-librarian audit reports
+│   └── 90-archives/       superseded/old content (never delete)
+├── docs/                  routines setup, verification checklist
+├── integrations/          external integrations (e.g. dutchquill/)
+└── scripts/               validate.py, check_verboden_woorden.py, setup.sh
+```
+
+## Skills
+
+| Skill | Purpose |
+|---|---|
+| `/search <query>` | Tavily → WebFetch → WebSearch fallback chain |
+| `/ingest <URL\|text>` | Crawl docs into wiki/40-references/ with master-index |
+| `/einde-sessie` | Close session: write log, merge MEMORY, append decisions |
+| `/dutch-write <text>` | Rewrite Dutch text per DutchQuill rules |
+
+## Agents
+
+| Agent | Trigger | Purpose |
+|---|---|---|
+| `security-reviewer` | post-edit hook + manual | Read-only secret-scan (Haiku) |
+| `wiki-librarian` | manual `@wiki-librarian daily\|weekly\|monthly` or cloud routine | Wiki audits with escalation |
+
+## Hooks
+
+- **SessionStart** — injects MEMORY + priorities + recent sessions
+- **Stop (smart-trigger)** — runs `/einde-sessie` automatically when substantial work happened (content changes OR ≥10 tool-uses)
+- **PreToolUse (Edit\|Write\|MultiEdit)** — hard-blocks secrets in new content
+- **PostToolUse (Edit\|Write\|MultiEdit)** — re-scans disk, runs Dutch style advisory on relevant files
+
+## Cloud routines (optional)
+
+Setup three scheduled audits via Claude Code routines — see [`docs/routines.md`](docs/routines.md):
+
+- Daily 09:00 — light lint
+- Weekly Sunday 18:00 — structure audit
+- Monthly 1st 18:00 — deep audit
 
 ## Roadmap
 
-- **Fase 1** (week 1) — repo skeleton, wiki vault, core skills (`/search`, `/ingest`, `/einde-sessie`, `/dutch-write`), hooks, MK-II context migration, first doc-ingest.
-- **Fase 2** (week 2-3) — `wiki-librarian` routine, daily audit snapshot, external workspace integration (Pentest / TryHackMe / homelab).
-- **Fase 3** (month 2+) — publish CYRIX skills as a Claude Code plugin, template validation via testfork, MK-IV planning.
+- **Fase 1** ✅ (week 1) — repo skeleton, wiki, core skills, hooks, context migration, first doc-ingest, privacy fix.
+- **Fase 2** — wiki-librarian cloud routines, external workspace integration (Pentest / TryHackMe / homelab share the same vault), bento-grid CSS polish.
+- **Fase 3** — publish skills as a Claude Code plugin, template validation via testfork, learnings → MK-IV planning.
+
+## Documentation
+
+- [`docs/routines.md`](docs/routines.md) — cloud routine setup
+- [`docs/verificatie-fase1.md`](docs/verificatie-fase1.md) — fase 1 verification checklist
+- [`integrations/dutchquill/README.md`](integrations/dutchquill/README.md) — DutchQuill integration details
 
 ## License
 
