@@ -18,28 +18,32 @@ re-ingest-trigger: monthly wiki-librarian bij stale review-date
 
 ## Pagina-index
 
-| Onderwerp | Lokale samenvatting | Bron |
-|---|---|---|
-| Overview | [`overview.md`](./overview.md) | https://code.claude.com/docs/en/overview |
-| CLI reference | [`cli-reference.md`](./cli-reference.md) | https://code.claude.com/docs/en/cli-usage |
-| Skills | [`skills.md`](./skills.md) | https://code.claude.com/docs/en/skills |
-| Sub-agents | [`sub-agents.md`](./sub-agents.md) | https://code.claude.com/docs/en/sub-agents |
-| Agent teams | [`agent-teams.md`](./agent-teams.md) | https://code.claude.com/docs/en/agent-teams |
-| Settings | [`settings.md`](./settings.md) | https://code.claude.com/docs/en/settings |
-| Hooks | [`hooks.md`](./hooks.md) | https://code.claude.com/docs/en/hooks |
-| Memory | [`memory.md`](./memory.md) | https://code.claude.com/docs/en/memory |
-| MCP | [`mcp.md`](./mcp.md) | https://code.claude.com/docs/en/mcp |
+| Onderwerp | Lokale samenvatting | Bron | Ingest |
+|---|---|---|---|
+| Overview | [`overview.md`](./overview.md) | https://code.claude.com/docs/en/overview | 2026-03-26 |
+| CLI reference | [`cli-reference.md`](./cli-reference.md) | https://code.claude.com/docs/en/cli-usage | 2026-03-26 |
+| Skills | [`skills.md`](./skills.md) | https://code.claude.com/docs/en/skills | 2026-03-26 |
+| Sub-agents | [`sub-agents.md`](./sub-agents.md) | https://code.claude.com/docs/en/sub-agents | 2026-03-26 |
+| Agent teams | [`agent-teams.md`](./agent-teams.md) | https://code.claude.com/docs/en/agent-teams | 2026-03-26 |
+| Settings | [`settings.md`](./settings.md) | https://code.claude.com/docs/en/settings | 2026-03-26 |
+| Hooks | [`hooks.md`](./hooks.md) | https://code.claude.com/docs/en/hooks | 2026-03-26 |
+| Memory | [`memory.md`](./memory.md) | https://code.claude.com/docs/en/memory | 2026-03-26 |
+| MCP | [`mcp.md`](./mcp.md) | https://code.claude.com/docs/en/mcp | 2026-03-26 |
+| **Routines** | [`routines.md`](./routines.md) | https://code.claude.com/docs/en/routines | **2026-06-09** |
+| **Output styles** | [`output-styles.md`](./output-styles.md) | https://code.claude.com/docs/en/output-styles | **2026-06-09** |
+| **Slash commands** | [`slash-commands.md`](./slash-commands.md) | https://code.claude.com/docs/en/slash-commands | **2026-06-09** |
+| **Plugins** | [`plugins.md`](./plugins.md) | https://code.claude.com/docs/en/plugins | **2026-06-09** |
 
-## Ontbreekt in deze ingest
+## Belangrijke recente vondsten
 
-Bij re-ingest in september 2026: check op nieuwe pagina's. Op moment van ingest waren deze relevant maar niet in de set:
+- **Custom commands en skills zijn samengevoegd** — files in `.claude/commands/` en `.claude/skills/<naam>/SKILL.md` maken beide een slash-command. Nieuwe code: gebruik skills.
+- **Routines** zijn nu in research preview en draaien in Anthropic-cloud (laptop kan uit). Drie trigger-types: schedule, API, GitHub.
+- **Bundled skills** (`/run`, `/verify`, `/debug`, `/loop`, `/code-review`) zijn standaard beschikbaar.
+- **Plugins** kunnen monitors, LSP servers, en `settings.json` met `agent`-default shippen.
 
-- **Routines** — https://code.claude.com/docs/en/routines (gebruikt voor `wiki-librarian` automation)
-- **Output styles** — https://code.claude.com/docs/en/output-styles
-- **Slash commands** — https://code.claude.com/docs/en/slash-commands
-- **Plugins** — https://code.claude.com/docs/en/plugins
+## Nog te ingestren bij re-ingest
 
-Toevoegen aan deze index zodra ingestrueerd via `/ingest-docs https://code.claude.com/docs/en/<topic>`.
+September 2026 review-cyclus zal de bestaande 9 maart-pagina's verversen en eventueel nieuwe topics toevoegen die sinds juni 2026 zijn ontstaan.
 
 ## Hoe deze referentie gebruikt wordt
 

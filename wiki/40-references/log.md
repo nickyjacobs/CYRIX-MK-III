@@ -37,3 +37,10 @@ Append-only log van alle `/ingest` en `/ingest-docs` aanroepen. Audit-trail voor
 **Pad:** `wiki/40-references/dutchquill/`
 **Trigger:** initial
 **Notities:** Selectie van 3 generieke gidsen + LICENSE. APA, academische stijl, AI-gebruik gids NIET overgenomen (te studie-specifiek). Re-ingest review-date: 2026-09-09.
+
+## 2026-06-09 — claude-code (partial update)
+**Bron:** WebFetch op https://code.claude.com/docs/en/{routines,output-styles,slash-commands,plugins}
+**Pagina's:** 4 nieuw (routines, output-styles, slash-commands, plugins)
+**Pad:** `wiki/40-references/claude-code/`
+**Trigger:** partial-update — fill gaps van maart-ingest
+**Notities:** Belangrijke vondst: custom commands en skills zijn gemerged. Routines zijn nu in research preview. Bestaande 9 pagina's blijven van maart 2026 — full refresh in september-cyclus.

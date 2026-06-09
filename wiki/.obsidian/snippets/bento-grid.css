@@ -1,0 +1,68 @@
+/* CYRIX MK-III — Bento-grid styling
+ * Glassmorphism cards met kleur-codering per categorie.
+ * Activeer in Obsidian: Settings → Appearance → CSS snippets → toggle bento-grid.
+ */
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.bento-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 4px solid var(--bento-accent, var(--interactive-accent));
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+
+.bento-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--bento-accent, var(--interactive-accent));
+}
+
+.bento-card h2 {
+  margin-top: 0;
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
+  color: var(--bento-accent, var(--text-normal));
+}
+
+.bento-card p,
+.bento-card em {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: -0.25rem;
+}
+
+.bento-card ul {
+  padding-left: 1rem;
+  margin: 0.5rem 0 0;
+}
+
+.bento-card a {
+  color: var(--text-normal);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--bento-accent, var(--text-faint));
+}
+
+.bento-card a:hover {
+  color: var(--bento-accent, var(--text-accent));
+  border-bottom-style: solid;
+}
+
+/* Kleur-codering per categorie */
+
+.bento-card.cat-context     { --bento-accent: #4FC3F7; }  /* blauw — context */
+.bento-card.cat-projects    { --bento-accent: #81C784; }  /* groen — projecten */
+.bento-card.cat-knowledge   { --bento-accent: #FFD54F; }  /* geel — kennis */
+.bento-card.cat-sessions    { --bento-accent: #BA68C8; }  /* paars-licht — sessies */
+.bento-card.cat-references  { --bento-accent: #7E57C2; }  /* paars — references */
+.bento-card.cat-decisions   { --bento-accent: #FF8A65; }  /* oranje — besluiten */
+.bento-card.cat-audits      { --bento-accent: #EF5350; }  /* rood — audits */
+.bento-card.cat-archives    { --bento-accent: #90A4AE; }  /* grijs — archives */
