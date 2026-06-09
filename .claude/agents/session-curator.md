@@ -16,7 +16,7 @@ Altijd in **dry-run** beginnen — toon wat je zou doen, schrijf NIET. Pas bij e
 
 ### Stap 1 — Lees input
 
-Standaard pad: `wiki/30-sessions/raw/<timestamp>-<slug>.md`. Lees ook bijbehorend processed-bestand in `wiki/30-sessions/<datum>-<slug>.md` (eigen referentie).
+Standaard pad: `wiki/30-sessions/raw/<timestamp>-<slug>.md`. Lees ook bijbehorend processed-bestand in `wiki/30-sessions/processed/<datum>-<slug>.md` (eigen referentie).
 
 Optioneel: het oorspronkelijke transcript-pad staat in de frontmatter (`transcript:`). Als die file nog bestaat, lees relevante delen voor extra context.
 
