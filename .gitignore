@@ -24,8 +24,11 @@ wiki/30-sessions/raw/*
 # (geen patroon nodig)
 
 # --- Wiki: andere persoonlijke content ---
+# 60-audits bevat ook blocked-commits-*.md met mogelijke secret-snippets, dus standaard lokaal.
+# Uitzondering: lint/ is committable (wiki-librarian audit-rapporten + tracking, via PR).
 wiki/60-audits/*
 !wiki/60-audits/.gitkeep
+!wiki/60-audits/lint/
 
 # Wiki context (examples committable, echte data lokaal)
 wiki/00-context/*.md
