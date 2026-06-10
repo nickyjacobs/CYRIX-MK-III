@@ -29,6 +29,48 @@ VERBODEN_OPENERS = [
 ]
 
 
+def _inflect_pattern(word: str) -> str:
+    """Bouw een regex die het woord plus veelvoorkomende NL-verbuigingen vangt.
+
+    Dekt de hoofd-uitgangen (bijvoeglijk + werkwoord). Advisory, dus enige
+    onvolledigheid is acceptabel; doel is geen valse negatieven op simpele
+    verbuigingen als 'cruciale', 'essentiële', 'stroomlijnt'.
+    """
+    # Meerdere woorden (bv. 'duiken in', 'scala aan'): letterlijk matchen.
+    if " " in word:
+        return rf"\b{re.escape(word)}\b"
+
+    # Bijvoeglijke naamwoorden met klinker-verandering bij verbuiging.
+    adj_rules = [
+        ("aal", ("aal", "ale")),         # cruciaal / cruciale, integraal / integrale
+        ("eel", ("eel", "ele", "ële")),  # essentieel / essentiële
+        ("oos", ("oos", "oze")),         # naadloos / naadloze
+        ("ief", ("ief", "ieve")),        # proactief / proactieve, transformatief
+    ]
+    for ending, variants in adj_rules:
+        if word.endswith(ending):
+            stem = re.escape(word[: -len(ending)])
+            return rf"\b{stem}(?:{'|'.join(variants)})\b"
+
+    # Werkwoorden op -eert (faciliteert, demonstreert): stam + vervoeging + ge-...-eerd.
+    if word.endswith("eert"):
+        stem = re.escape(word[:-4])
+        return rf"\b(?:ge)?{stem}eer(?:t|en|de|d)?\b"
+
+    # Infinitief op -en (stroomlijnen, fosteren): stam + vervoeging + ge-...-d.
+    if word.endswith("en") and len(word) > 4:
+        stem = re.escape(word[:-2])
+        return rf"\b(?:ge)?{stem}(?:en|t|de|d)?\b"
+
+    # Algemene fallback: woord + optionele veelvoorkomende uitgang.
+    return rf"\b{re.escape(word)}(?:en|e|er|ere|s|t)?\b"
+
+
+VERBODEN_PATTERNS = [
+    (word, re.compile(_inflect_pattern(word))) for word in VERBODEN_WOORDEN
+]
+
+
 def scan(path: Path) -> int:
     if not path.exists() or not path.is_file():
         return 0
@@ -54,9 +96,12 @@ def scan(path: Path) -> int:
 
         lowered = line.lower()
 
-        for word in VERBODEN_WOORDEN:
-            if re.search(rf"\b{re.escape(word)}\b", lowered):
-                hits.append((i, f"woord: '{word}'", line.strip()[:90]))
+        for word, pattern in VERBODEN_PATTERNS:
+            m = pattern.search(lowered)
+            if m:
+                vorm = m.group(0)
+                label = f"woord: '{word}'" if vorm == word else f"woord: '{word}' (als '{vorm}')"
+                hits.append((i, label, line.strip()[:90]))
 
         for opener in VERBODEN_OPENERS:
             if lowered.lstrip().startswith(opener):

@@ -85,23 +85,31 @@ def _is_allowed(line: str) -> bool:
 
 
 def scan_content(content: str, source: str) -> tuple[list, list]:
-    """Returns (hard_hits, soft_hits)."""
+    """Returns (hard_hits, soft_hits).
+
+    Allowed-markers worden PER MATCH toegepast (op de gematchte waarde), niet
+    per regel. Zo onderdrukt een placeholder als 'example' elders op de regel
+    niet langer een echte hard finding, bijvoorbeeld een connection-string met
+    embedded credentials richting example.com (de host valt buiten de match,
+    dus alleen een placeholder-wachtwoord in de match onderdrukt nog).
+    """
     hard_hits: list[tuple[int, str, str]] = []
     soft_hits: list[tuple[int, str, str]] = []
 
     for i, line in enumerate(content.splitlines(), 1):
-        if _is_allowed(line):
-            continue
-
         snippet = line.strip()[:100]
+        line_has_hard = False
 
         for name, pattern in HARD_PATTERNS.items():
-            if re.search(pattern, line):
+            m = re.search(pattern, line)
+            if m and not _is_allowed(m.group(0)):
                 hard_hits.append((i, name, snippet))
+                line_has_hard = True
 
-        if not any(h[0] == i for h in hard_hits):
+        if not line_has_hard:
             for name, pattern in SOFT_PATTERNS.items():
-                if re.search(pattern, line):
+                m = re.search(pattern, line)
+                if m and not _is_allowed(m.group(0)):
                     soft_hits.append((i, name, snippet))
 
     return hard_hits, soft_hits
