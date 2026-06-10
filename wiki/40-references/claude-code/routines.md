@@ -2,7 +2,7 @@
 title: Claude Code — Routines
 source-url: https://code.claude.com/docs/en/routines
 ingest-date: 2026-06-09
-review-date: 2026-09-09
+review-date: 2026-09-10
 tags: [reference, claude-code, automation]
 category: 40-references
 status: active
