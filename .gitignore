@@ -32,6 +32,18 @@ wiki/00-context/*.md
 !wiki/00-context/*.example.md
 !wiki/00-context/index.md
 
+# Wiki projecten + knowledge (publiek template: echte content lokaal,
+# alleen generieke index.md + *.example.md committen — geldt ook voor
+# project-subfolders zoals 10-projects/<naam>/)
+wiki/10-projects/*
+!wiki/10-projects/.gitkeep
+!wiki/10-projects/index.md
+!wiki/10-projects/*.example.md
+wiki/20-knowledge/*
+!wiki/20-knowledge/.gitkeep
+!wiki/20-knowledge/index.md
+!wiki/20-knowledge/*.example.md
+
 # Wiki decisions log (example committable, echte log lokaal)
 wiki/50-decisions/log.md
 
