@@ -21,6 +21,7 @@ Scan-tijd: max 2 min. Detecteer:
    - `40-references/`: `title`, `source-url`, `ingest-date`, `review-date`, `tags`, `category`, `status`
    - `20-knowledge/` en `10-projects/`: `title`, `created`, `updated`, `tags`, `category`, `status`
    - `30-sessions/`: `title`, `date`, `type`, `status`, `tags`, `category`
+   - `index.md`-landingspagina's: alleen `title`, `category`, `status` (navigatie, geen datum-velden vereist)
    Eis NOOIT `created`/`updated` voor references of sessions — die gebruiken bewust `ingest-date`/`review-date` respectievelijk `date`.
 3. **Lege notes** — files <200 bytes (excl. frontmatter)
 4. **Orphan pages** — pagina's zonder enkele backlink (zoek met grep naar wikilink met deze filename)

@@ -67,7 +67,7 @@ Zie [[40-references/index|References-overzicht]] of browse `40-references/`.
 ## ⚖️ Besluiten
 *Append-only beslissingen-log met onderbouwing*
 
-- [[50-decisions/log|Decisions log]]
+- [[50-decisions/log.example|Decisions log]] · *(echte `log.md` is gitignored, blijft lokaal)*
 
 </div>
 
@@ -103,17 +103,11 @@ Browse `90-archives/`.
 
 ## Frontmatter-conventie
 
-Elke pagina heeft minimum:
+Minimum per pagina: `title`, `tags`, `category`, `status`. De datum-velden zijn categorie-afhankelijk:
 
-```yaml
----
-title: 
-created: YYYY-MM-DD
-updated: YYYY-MM-DD
-tags: []
-category: <folder-naam>
-status: draft | active | archived
----
-```
+- `10-projects/`, `20-knowledge/`: `created` + `updated`
+- `40-references/`: `ingest-date` + `review-date` (+ `source-url`)
+- `30-sessions/`: `date`
+- `index.md`-landingspagina's: geen datum-velden nodig
 
 Templates in [`_templates/`](./_templates/).
