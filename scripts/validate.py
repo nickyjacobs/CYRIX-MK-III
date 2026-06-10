@@ -78,6 +78,10 @@ ALLOWED_MARKERS = [
     "n.v.t.", "test@example.com", "user@example.com",
 ]
 
+# Security-tooling bevat per definitie patroon-strings (BEGIN ... KEY, db-URI's).
+# Die bestanden overslaan voorkomt valse HARD-hits op de eigen regex-definities.
+SELF_SKIP = {"validate.py", "anonymize.py"}
+
 
 def _is_allowed(line: str) -> bool:
     lowered = line.lower()
@@ -143,6 +147,8 @@ def report(hard_hits: list, soft_hits: list, path: str) -> int:
 
 def scan_file(path: Path) -> int:
     if not path.exists() or not path.is_file():
+        return 0
+    if path.name in SELF_SKIP:
         return 0
     if path.suffix not in {".md", ".json", ".yml", ".yaml", ".sh", ".py", ".js", ".ts", ".env"}:
         return 0
