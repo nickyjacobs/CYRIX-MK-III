@@ -17,7 +17,11 @@ Aanroep met één argument: `daily | weekly | monthly`. Geen argument = daily.
 Scan-tijd: max 2 min. Detecteer:
 
 1. **Broken markdown links** binnen `wiki/**/*.md` — wikilinks `[[ ]]` en standaard `[]( )` links naar files die niet bestaan
-2. **Missing frontmatter** — `.md` files in `wiki/` zonder `---` block of zonder verplichte velden (title, created, updated, tags, category, status)
+2. **Missing frontmatter** — `.md` files in `wiki/` zonder `---` block, of zonder de voor hun categorie verplichte velden. De datum-velden zijn categorie-afhankelijk (conform `wiki/_templates/`):
+   - `40-references/`: `title`, `source-url`, `ingest-date`, `review-date`, `tags`, `category`, `status`
+   - `20-knowledge/` en `10-projects/`: `title`, `created`, `updated`, `tags`, `category`, `status`
+   - `30-sessions/`: `title`, `date`, `type`, `status`, `tags`, `category`
+   Eis NOOIT `created`/`updated` voor references of sessions — die gebruiken bewust `ingest-date`/`review-date` respectievelijk `date`.
 3. **Lege notes** — files <200 bytes (excl. frontmatter)
 4. **Orphan pages** — pagina's zonder enkele backlink (zoek met grep naar wikilink met deze filename)
 5. **Notes zonder tags** — frontmatter heeft lege `tags: []`
