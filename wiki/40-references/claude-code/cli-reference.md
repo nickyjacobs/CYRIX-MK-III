@@ -1,16 +1,16 @@
 ---
-title: Claude Code — CLI Reference
-source-url: https://code.claude.com/docs/en/cli-usage
-ingest-date: 2026-03-26
-review-date: 2026-09-09
-tags: [reference, claude-code]
+title: "Claude Code: CLI Reference"
+source-url: https://code.claude.com/docs/en/cli-reference
+ingest-date: 2026-06-10
+review-date: 2026-09-10
+tags: [reference, claude-code, cli]
 category: 40-references
 status: active
 ---
 
 # CLI Reference
 
-> Bron: https://code.claude.com/docs/en/cli-usage
+> Bron: https://code.claude.com/docs/en/cli-reference
 
 ## Commands
 
@@ -108,3 +108,12 @@ status: active
 | `--max-budget-usd` | Maximum budget voor API calls (print mode) |
 | `--debug` | Debug modus met optionele categorie filtering |
 | `--version`, `-v` | Versienummer tonen |
+
+## Update 2026-06-10 (docs-drift)
+
+Nieuw of gewijzigd ten opzichte van de maart-ingest:
+
+- **Source-URL gewijzigd:** `/en/cli-usage` is nu `/en/cli-reference`.
+- **Nieuwe commands (background agents):** `claude attach <id>`, `claude logs <id>`, `claude stop <id>`, `claude respawn <id>`, `claude rm <id>`, `claude daemon status|stop`.
+- **Overige nieuwe commands:** `claude project purge`, `claude setup-token`, `claude ultrareview [target]`.
+- **Nieuwe flags:** `--bg` (background), `--channels`, `--advisor`, `--betas`.

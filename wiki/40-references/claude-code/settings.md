@@ -1,9 +1,9 @@
 ---
-title: Claude Code — Settings
+title: "Claude Code: Settings"
 source-url: https://code.claude.com/docs/en/settings
-ingest-date: 2026-03-26
-review-date: 2026-09-09
-tags: [reference, claude-code]
+ingest-date: 2026-06-10
+review-date: 2026-09-10
+tags: [reference, claude-code, settings]
 category: 40-references
 status: active
 ---
@@ -144,3 +144,13 @@ Agent(Explore)          # Specifieke subagent
 Skill(commit)           # Specifieke skill
 Skill(review-pr *)      # Skill met prefix match
 ```
+
+## Update 2026-06-10 (docs-drift)
+
+Nieuw of gewijzigd ten opzichte van de maart-ingest:
+
+- **`includeCoAuthoredBy` is deprecated**, gebruik `attribution` (relevant voor de no-Co-Authored-By commit-policy).
+- **Managed (admin) keys:** `policyHelper` (v2.1.136+, dynamische managed settings), `parentSettingsBehavior` (v2.1.133+), `requiredMinimumVersion`/`requiredMaximumVersion`, `allowedMcpServers`/`deniedMcpServers`, `strictKnownMarketplaces`.
+- **Nieuw:** `disableRemoteControl` (v2.1.128+), `disableAgentView`, `autoMemoryEnabled`, `autoUpdatesChannel` (`stable`/`latest`), `minimumVersion`.
+- **Skills:** `skillOverrides` (`on`/`name-only`/`user-invocable-only`/`off`), `disableBundledSkills`, `disableWorkflows`, `maxSkillDescriptionChars`.
+- Precedentie bevestigd: Managed > CLI-args > Local > Project > User. Permission-rules mergen over scopes in plaats van overschrijven.
