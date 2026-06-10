@@ -1,9 +1,9 @@
 ---
-title: Claude Code — Hooks
+title: "Claude Code: Hooks"
 source-url: https://code.claude.com/docs/en/hooks
-ingest-date: 2026-03-26
-review-date: 2026-09-09
-tags: [reference, claude-code]
+ingest-date: 2026-06-10
+review-date: 2026-09-10
+tags: [reference, claude-code, hooks]
 category: 40-references
 status: active
 ---
@@ -223,3 +223,14 @@ fi
   }
 }
 ```
+
+## Update 2026-06-10 (docs-drift)
+
+Nieuw of gewijzigd ten opzichte van de maart-ingest:
+
+- **Extra events:** `Setup`, `UserPromptExpansion`, `PostToolBatch`, `PermissionDenied`, `SubagentStart`, `TaskCreated`, `MessageDisplay` (de volledige lijst telt nu circa 28 events).
+- **Extra hook-type:** `mcp_tool` (roept een tool op een verbonden MCP-server aan), naast command, http, prompt en agent.
+- **Async hooks:** `"async": true` draait op de achtergrond zonder te blokkeren; `"asyncRewake": true` wekt Claude bij exit 2.
+- **`disableAllHooks`-setting** en een read-only **`/hooks`-menu** om alle geconfigureerde hooks te inspecteren.
+- **Exec-form vs shell-form:** met `args` een directe spawn (geen shell, veilig voor spaties); zonder `args` via `sh -c`.
+- **`sessionTitle`** in SessionStart-output voor auto-naming; `additionalContext` injecteert tot 10k tekens context.

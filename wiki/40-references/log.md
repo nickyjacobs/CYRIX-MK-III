@@ -1,7 +1,7 @@
 ---
 title: References ingest log
 created: 2026-06-09
-updated: 2026-06-09
+updated: 2026-06-10
 tags: [references, log, audit-trail]
 category: 40-references
 status: active
@@ -44,3 +44,10 @@ Append-only log van alle `/ingest` en `/ingest-docs` aanroepen. Audit-trail voor
 **Pad:** `wiki/40-references/claude-code/`
 **Trigger:** partial-update — fill gaps van maart-ingest
 **Notities:** Belangrijke vondst: custom commands en skills zijn gemerged. Routines zijn nu in research preview. Bestaande 9 pagina's blijven van maart 2026 — full refresh in september-cyclus.
+
+## 2026-06-10 — claude-code (re-ingest, top-3 drift)
+**Bron:** WebFetch op https://code.claude.com/docs/en/{hooks,cli-reference,settings}
+**Pagina's:** 3 bijgewerkt (hooks, cli-reference, settings)
+**Pad:** `wiki/40-references/claude-code/`
+**Trigger:** re-ingest — o.b.v. docs-drift rapport (PR #3, routine `cyrix-docs-drift-claudecode`)
+**Notities:** Bestaande detail behouden, frontmatter ververst (ingest-date 2026-06-10, review-date 2026-09-10), cli-reference source-url gecorrigeerd (cli-usage werd cli-reference). Per pagina een "Update 2026-06-10 (docs-drift)" sectie met nieuwe events/commands/keys. Oude versies in git-history (geen aparte archive). De overige 39 nieuwe pagina's uit het drift-rapport zijn nog niet ge-ingest.
