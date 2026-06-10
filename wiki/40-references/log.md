@@ -51,3 +51,10 @@ Append-only log van alle `/ingest` en `/ingest-docs` aanroepen. Audit-trail voor
 **Pad:** `wiki/40-references/claude-code/`
 **Trigger:** re-ingest — o.b.v. docs-drift rapport (PR #3, routine `cyrix-docs-drift-claudecode`)
 **Notities:** Bestaande detail behouden, frontmatter ververst (ingest-date 2026-06-10, review-date 2026-09-10), cli-reference source-url gecorrigeerd (cli-usage werd cli-reference). Per pagina een "Update 2026-06-10 (docs-drift)" sectie met nieuwe events/commands/keys. Oude versies in git-history (geen aparte archive). De overige 39 nieuwe pagina's uit het drift-rapport zijn nog niet ge-ingest.
+
+## 2026-06-10 — claude-code (partial update, HOOG-prioriteit drift-pagina's)
+**Bron:** WebFetch op https://code.claude.com/docs/en/{commands,agent-view,permissions,env-vars,channels,channels-reference,advisor,permission-modes,model-config,debug-your-config}
+**Pagina's:** 10 nieuw (commands, agent-view, permissions, env-vars, channels, channels-reference, advisor, permission-modes, model-config, debug-your-config)
+**Pad:** `wiki/40-references/claude-code/`
+**Trigger:** partial-update — HOOG-prioriteit nieuwe pagina's uit het docs-drift rapport (PR #3, routine `cyrix-docs-drift-claudecode`)
+**Notities:** Gecureerde samenvattingen (overzicht + tabellen), geen volledige kopie. Frontmatter conform model `settings.md`/`hooks.md` (ingest-date 2026-06-10, review-date 2026-09-10). 00-index TOC bijgewerkt met de 10 pagina's. Resterende drift-pagina's (lagere prioriteit) nog open voor volgende ronde.

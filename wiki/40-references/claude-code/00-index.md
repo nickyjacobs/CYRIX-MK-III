@@ -33,6 +33,16 @@ re-ingest-trigger: monthly wiki-librarian bij stale review-date
 | **Output styles** | [`output-styles.md`](./output-styles.md) | https://code.claude.com/docs/en/output-styles | **2026-06-09** |
 | **Slash commands** | [`slash-commands.md`](./slash-commands.md) | https://code.claude.com/docs/en/slash-commands | **2026-06-09** |
 | **Plugins** | [`plugins.md`](./plugins.md) | https://code.claude.com/docs/en/plugins | **2026-06-09** |
+| **Commands** | [`commands.md`](./commands.md) | https://code.claude.com/docs/en/commands | **2026-06-10** |
+| **Agent view** | [`agent-view.md`](./agent-view.md) | https://code.claude.com/docs/en/agent-view | **2026-06-10** |
+| **Permissions** | [`permissions.md`](./permissions.md) | https://code.claude.com/docs/en/permissions | **2026-06-10** |
+| **Permission modes** | [`permission-modes.md`](./permission-modes.md) | https://code.claude.com/docs/en/permission-modes | **2026-06-10** |
+| **Environment variables** | [`env-vars.md`](./env-vars.md) | https://code.claude.com/docs/en/env-vars | **2026-06-10** |
+| **Model config** | [`model-config.md`](./model-config.md) | https://code.claude.com/docs/en/model-config | **2026-06-10** |
+| **Advisor tool** | [`advisor.md`](./advisor.md) | https://code.claude.com/docs/en/advisor | **2026-06-10** |
+| **Channels** | [`channels.md`](./channels.md) | https://code.claude.com/docs/en/channels | **2026-06-10** |
+| **Channels reference** | [`channels-reference.md`](./channels-reference.md) | https://code.claude.com/docs/en/channels-reference | **2026-06-10** |
+| **Debug your config** | [`debug-your-config.md`](./debug-your-config.md) | https://code.claude.com/docs/en/debug-your-config | **2026-06-10** |
 
 ## Belangrijke recente vondsten
 
