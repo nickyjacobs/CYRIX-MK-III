@@ -50,6 +50,9 @@ wiki/20-knowledge/*
 # Wiki decisions log (example committable, echte log lokaal)
 wiki/50-decisions/log.md
 
+# Root MEMORY (example committable, echte memory lokaal — bevat werk/klant-context)
+/MEMORY.md
+
 # --- Obsidian per-user state (nested directories ondersteund) ---
 **/.obsidian/workspace*
 **/.obsidian/workspace-mobile*
