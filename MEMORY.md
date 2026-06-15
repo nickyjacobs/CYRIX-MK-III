@@ -38,3 +38,15 @@ Houd deze file scherp. Dubbele inzichten worden bij merge gededupliceerd. Veroud
 **Categorie:** feit
 **Inhoud:** Claude Code cloud-routines maak je via `/schedule` (RemoteTrigger / claude.ai-account), niet via een `claude routine create`-commando. Push vanuit de cloud loopt via de gekoppelde GitHub-identiteit na `/web-setup`.
 **Bron:** sessie-log 2026-06-10-cloud-routines-wiki-migratie-fase3
+
+## Anthropic ZDR dekt de chat-UI niet
+**Datum:** 2026-06-15
+**Categorie:** feit
+**Inhoud:** Zero Data Retention geldt niet voor de Team- en Enterprise-chatomgeving, alleen voor de Messages- en Token Counting-API en voor Claude Code via een Commercial API-key of Enterprise-met-ZDR. De nieuwste modellen (Fable 5, Mythos 5) vereisen 30 dagen retentie en ondersteunen geen ZDR. Relevant voor SOC-werk met gevoelige data.
+**Bron:** sessie-log 2026-06-15-soc-benodigdheden-claude-businesscase
+
+## Claude Enterprise-pricing is sales-gated
+**Datum:** 2026-06-15
+**Categorie:** feit
+**Inhoud:** Enterprise heeft geen vaste publieke prijs (seat plus usage tegen API-tarieven, via sales). Team is wel publiek: Standard $20 en Premium $100 per seat jaarlijks, minimum 5 seats. Bij licentie-businesscases dus Team als prijsanker gebruiken en Enterprise als offerte-traject behandelen.
+**Bron:** sessie-log 2026-06-15-soc-benodigdheden-claude-businesscase
