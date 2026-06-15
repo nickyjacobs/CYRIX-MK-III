@@ -1,5 +1,7 @@
 {
   "enabledCssSnippets": [
     "bento-grid"
-  ]
+  ],
+  "cssTheme": "Minimal",
+  "accentColor": "#00bfff"
 }
