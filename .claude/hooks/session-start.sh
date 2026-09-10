@@ -16,10 +16,18 @@ cd "${REPO_ROOT}"
 echo "=== CYRIX MK-III session context ==="
 echo ""
 
-# MEMORY (max 80 lines, filtered headings + content)
+# MEMORY (alle inzichten)
+# Niet de eerste N regels tonen: MEMORY groeit en een vaste afkap verbergt juist
+# de nieuwste inzichten. Het format-blok bovenaan is instructie, geen context.
 if [[ -f MEMORY.md ]]; then
-    echo "## MEMORY (top 80 regels)"
-    head -n 80 MEMORY.md
+    if grep -q '<!-- Begin van de inzichten -->' MEMORY.md; then
+        memory_body=$(awk '/<!-- Begin van de inzichten -->/{f=1; next} f' MEMORY.md)
+    else
+        memory_body=$(cat MEMORY.md)
+    fi
+    memory_count=$(printf '%s\n' "${memory_body}" | grep -c '^## ' || true)
+    echo "## MEMORY (${memory_count} inzichten)"
+    printf '%s\n' "${memory_body}" | head -n 400
     echo ""
 fi
 
@@ -36,7 +44,8 @@ fi
 
 # Last 3 session logs (excluding stubs)
 if [[ -d wiki/30-sessions ]]; then
-    sessions=$(find wiki/30-sessions -name "*.md" ! -name "*-onafgesloten.md" -type f 2>/dev/null \
+    # maxdepth 1: alleen de gecureerde logs in de root, niet raw/ en processed/
+    sessions=$(find wiki/30-sessions -maxdepth 1 -name "*.md" ! -name "*-onafgesloten.md" -type f 2>/dev/null \
                | sort -r | head -n 3)
     if [[ -n "${sessions}" ]]; then
         echo "## Laatste 3 sessies"
@@ -49,7 +58,10 @@ fi
 
 # Open audit findings older than 7 days
 if [[ -d wiki/60-audits ]]; then
-    old=$(find wiki/60-audits -name "*.md" -mtime +7 -type f 2>/dev/null | head -n 3)
+    # Alleen rapporten die nog openstaan; een afgehandeld rapport krijgt
+    # 'status: done' in de frontmatter en verdwijnt dan uit deze melding.
+    old=$(find wiki/60-audits -name "*.md" -mtime +7 -type f 2>/dev/null \
+          | xargs grep -l '^status: open' 2>/dev/null | head -n 3)
     if [[ -n "${old}" ]]; then
         echo "## Audit-findings ouder dan 7 dagen"
         while IFS= read -r a; do

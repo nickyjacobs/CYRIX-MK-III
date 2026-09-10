@@ -43,7 +43,15 @@ except: print('unknown')
 # Substantialiteit-check: content-changes EN/OF tool-use-count
 content_changes=0
 if [[ -d .git ]]; then
+    # Tel ook sites/ en context-private/: daar gebeurt echt werk dat anders als
+    # "geen wijzigingen" in de sessie-log belandt, ook na 200+ tool-uses.
     content_changes=$(git status --porcelain wiki/ MEMORY.md .claude/ scripts/ docs/ integrations/ *.md 2>/dev/null | wc -l | tr -d ' ')
+    for extra_dir in sites context-private; do
+        if [[ -d "${extra_dir}" ]]; then
+            extra=$(git status --porcelain --ignored=matching "${extra_dir}" 2>/dev/null | wc -l | tr -d ' ')
+            content_changes=$(( content_changes + extra ))
+        fi
+    done
 fi
 
 tool_uses=0
