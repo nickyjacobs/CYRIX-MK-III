@@ -9,6 +9,10 @@ description: Verwerk raw sessie-logs uit wiki/30-sessions/raw/ via @session-cura
 
 - Na één of meerdere sessies: lees ingest-marker of scan raw/-folder, distilleer kennis naar wiki
 - Wekelijks als hygiëne, zodat de raw-folder niet vol loopt
+- **Wanneer CYRIX het voorstelt.** De SessionStart-hook telt de wachtende logs en zet CYRIX aan
+  het voor te stellen zodra er drie of meer wachten, of zodra de oudste ouder is dan zeven dagen.
+  Daaronder wordt alleen geteld, zodat de melding niet bij elke sessie terugkomt en daardoor
+  weer genegeerd raakt.
 - **Tijdig**, want Claude Code ruimt transcripts na enkele weken op. De raw log bewaart de
   user-prompts en de gewijzigde bestanden, maar het volledige verloop van de sessie zit alleen
   in het transcript. Is dat opgeruimd, dan valt er aanzienlijk minder te distilleren. De
@@ -111,6 +115,12 @@ Volgende: 'git push' om te delen.
 ## Gedrag
 
 - **Default behaviour** = veilig: per log één keer agent in dry-run, dan akkoord vragen, dan apply
+- **Nooit automatisch bij sessie-einde.** De verleiding is groot om dit in de SessionEnd-hook te
+  hangen, maar die schrijft dan ongezien naar `20-knowledge/`, `50-decisions/`, project-READMEs en
+  MEMORY. Een verkeerde interpretatie vervuilt precies de bron waar je later op vertrouwt, en omdat
+  MEMORY elke sessie in context wordt geladen werkt zo'n fout door in alles daarna. Daar komt bij
+  dat de hook een timeout van 60 seconden heeft en dat je op dat moment weg bent. Het voorstel
+  gebeurt daarom bij sessiestart, met jou erbij.
 - **Geen auto-push** — gebruiker controleert wat extern wordt
 - **Idempotent** — verwerkte logs (in `raw/processed/`) worden niet opnieuw verwerkt
 - **Failover** — bij fouten in één log: rapporteer en ga door met volgende

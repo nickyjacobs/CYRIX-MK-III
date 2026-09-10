@@ -72,23 +72,48 @@ if [[ -d wiki/60-audits ]]; then
 fi
 
 # Onverwerkte sessie-logs
-# Distillatie via /process-sessions is een handmatige stap. Zonder deze melding
-# valt het niet op dat de backlog oploopt, en Claude Code ruimt de onderliggende
-# transcripts na enkele weken op: wat dan niet verwerkt is, is niet meer te
-# reconstrueren buiten de prompts in de log zelf.
+# Distillatie via /process-sessions is een handmatige stap. Die bleef liggen omdat
+# niets eraan herinnerde, terwijl Claude Code de onderliggende transcripts na enkele
+# weken opruimt: wat dan niet verwerkt is, valt alleen nog uit de prompts in de log
+# zelf te reconstrueren. Drempels voorkomen dat dit na elke sessie gaat zeuren en
+# daardoor opnieuw genegeerd wordt.
 if [[ -d wiki/30-sessions/raw ]]; then
     raw_count=$(find wiki/30-sessions/raw -maxdepth 1 -name "*.md" -type f 2>/dev/null | wc -l | tr -d ' ')
     if [[ "${raw_count}" -gt 0 ]]; then
-        oldest=$(find wiki/30-sessions/raw -maxdepth 1 -name "*.md" -type f 2>/dev/null \
-                 | sort | head -n 1 | xargs basename 2>/dev/null | cut -c1-10 || true)
-        echo "## Onverwerkte sessie-logs: ${raw_count}"
-        if [[ -n "${oldest}" ]]; then
-            echo "  Oudste: ${oldest}. Draai /process-sessions om ze te distilleren."
-        else
-            echo "  Draai /process-sessions om ze te distilleren."
+        oldest_file=$(find wiki/30-sessions/raw -maxdepth 1 -name "*.md" -type f 2>/dev/null | sort | head -n 1 || true)
+        oldest_date=$(basename "${oldest_file}" 2>/dev/null | cut -c1-10 || true)
+        oldest_days=""
+        if [[ -n "${oldest_date}" ]]; then
+            oldest_epoch=$(date -j -f "%Y-%m-%d" "${oldest_date}" "+%s" 2>/dev/null || echo "")
+            if [[ -n "${oldest_epoch}" ]]; then
+                oldest_days=$(( ( $(date +%s) - oldest_epoch ) / 86400 ))
+            fi
         fi
-        if [[ "${raw_count}" -ge 10 ]]; then
-            echo "  Let op: bij meer dan 10 logs zijn de oudste transcripts waarschijnlijk al opgeruimd."
+
+        echo "## Onverwerkte sessie-logs: ${raw_count}"
+        if [[ -n "${oldest_days}" ]]; then
+            echo "  Oudste: ${oldest_date} (${oldest_days} dagen geleden)."
+        fi
+
+        # Voorstellen vanaf 3 logs of zodra de oudste ouder is dan 7 dagen.
+        # Daaronder alleen tellen: bij een of twee verse logs is er geen haast.
+        should_prompt=0
+        [[ "${raw_count}" -ge 3 ]] && should_prompt=1
+        [[ -n "${oldest_days}" && "${oldest_days}" -gt 7 ]] && should_prompt=1
+
+        if [[ "${should_prompt}" -eq 1 ]]; then
+            if [[ "${raw_count}" -ge 10 || ( -n "${oldest_days}" && "${oldest_days}" -gt 21 ) ]]; then
+                echo "  De oudste transcripts zijn waarschijnlijk al opgeruimd; wat daar niet uit de"
+                echo "  log zelf te halen is, is weg."
+            fi
+            echo ""
+            echo "  INSTRUCTIE AAN CYRIX: stel in je eerste antwoord in een enkele zin voor om deze"
+            echo "  logs te verwerken met /process-sessions, en noem waarom het nu relevant is"
+            echo "  (aantal, ouderdom, transcript-retentie). Doe dat als losse regel na je antwoord"
+            echo "  op de vraag van de gebruiker, niet als opening. Slaat de gebruiker het af of"
+            echo "  gaat het gesprek een andere kant op, laat het dan rusten voor deze sessie."
+        else
+            echo "  Nog geen haast. /process-sessions verwerkt ze."
         fi
         echo ""
     fi
