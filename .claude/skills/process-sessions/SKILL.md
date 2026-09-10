@@ -21,7 +21,7 @@ description: Verwerk raw sessie-logs uit wiki/30-sessions/raw/ via @session-cura
 
 Twee bronnen:
 
-1. **Marker-file** (primair) — `/tmp/cyrix-ingest-backlog.txt` heeft `session_id|raw_path|processed_path|date` per regel, geschreven door SessionEnd-hook
+1. **Marker-file** (primair) — `.claude/state/ingest-backlog.txt` heeft `session_id|raw_path|processed_path|date` per regel, geschreven door SessionEnd-hook
 2. **Folder-scan** (fallback) — `find wiki/30-sessions/raw -name "*.md" ! -path "*/processed/*"` — alles wat nog niet verwerkt is
 
 Bij argument `--since=YYYY-MM-DD`: filter op datum uit frontmatter.
@@ -84,7 +84,7 @@ NIET auto-pushen. Eigenaar pusht handmatig na review (`git push`).
 
 Verplaats raw-log naar `wiki/30-sessions/raw/processed/<filename>` (sub-folder, ook gitignored).
 
-Verwijder de bijbehorende regel uit `/tmp/cyrix-ingest-backlog.txt`.
+Verwijder de bijbehorende regel uit `.claude/state/ingest-backlog.txt`.
 
 ### Stap 7 — Eindrapport
 
