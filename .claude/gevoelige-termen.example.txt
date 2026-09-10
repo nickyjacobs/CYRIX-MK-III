@@ -1,0 +1,20 @@
+# Gevoelige termen voor scripts/validate.py (soft-warnings)
+#
+# Kopieer dit bestand naar .claude/rules-private/gevoelige-termen.txt (gitignored)
+# en vul je eigen termen in. De scanner geeft een soft-warning zodra een term
+# opduikt in een bestand dat je wil committen.
+#
+# Formaat: een term per regel, gematcht als los woord.
+# Een regel tussen slashes wordt als regex behandeld: /patroon/
+# Regels die met # beginnen zijn commentaar.
+#
+# Bedoeld voor wat een generieke secret-scanner niet kan weten: interne
+# IP-ranges, interne domeinen, klant- en organisatienamen.
+
+# --- Eigen infrastructuur (voorbeelden) ---
+# /\b10\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/
+# /\b[\w-]+\.intern\.local\b/
+
+# --- Klant- en organisatiecontext ---
+# Klantnaam BV
+# klant-codenaam

@@ -69,18 +69,58 @@ SOFT_PATTERNS = {
     "vault_token":    r"\bhvs\.[a-zA-Z0-9_-]{24,}\b",
 }
 
+# Eigen infrastructuur en organisatie-termen. Deze staan bewust NIET hier hardcoded:
+# klantnamen en interne ranges horen niet in een publieke repo. Zet ze in
+# .claude/rules-private/gevoelige-termen.txt (gitignored), een term per regel.
+# Regels die met # beginnen zijn commentaar. Een term wordt als los woord gematcht,
+# tenzij hij op /regex/ lijkt; dan wordt hij als regex gebruikt.
+PRIVATE_TERMS_FILE = Path(".claude/rules-private/gevoelige-termen.txt")
+
+
+def load_private_patterns() -> dict:
+    """Leest de privé-termenlijst. Ontbreekt het bestand, dan is dit een no-op."""
+    patterns: dict[str, str] = {}
+    if not PRIVATE_TERMS_FILE.exists():
+        return patterns
+    try:
+        lines = PRIVATE_TERMS_FILE.read_text(encoding="utf-8").splitlines()
+    except Exception:
+        return patterns
+    for i, raw in enumerate(lines, 1):
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        if len(line) >= 2 and line.startswith("/") and line.endswith("/"):
+            pattern = line[1:-1]
+        else:
+            pattern = r"\b" + re.escape(line) + r"\b"
+        try:
+            re.compile(pattern)
+        except re.error:
+            print(f"[SECURITY] Ongeldige regex op regel {i} van {PRIVATE_TERMS_FILE}", file=sys.stderr)
+            continue
+        patterns[f"prive_term_{i}"] = pattern
+    return patterns
+
 # Regels waarvan we SOFT-hits onderdrukken (placeholders, examples)
 ALLOWED_MARKERS = [
     "your-token-here", "your_token_here", "your-key-here", "your_key_here",
     "ghp_your_", "tvly-your_", "sk-ant-your_", "sk-your_",
     "example", "placeholder", "<token>", "<api-key>", "<api_key>",
-    "<your-", "<your_", "xxxxxxxx", "fake", "dummy", "noreply@",
+    "<your-", "<your_", "xxxxxxxx", "noreply@",
     "n.v.t.", "test@example.com", "user@example.com",
+    # 'fake' en 'dummy' stonden hier los. Een echte credential die die reeks
+    # toevallig bevat werd daardoor stilletjes onderdrukt. Nu alleen als
+    # herkenbaar placeholder-affix.
+    "fake-", "-fake", "fake_", "_fake", "dummy-", "-dummy", "dummy_", "_dummy",
 ]
 
 # Security-tooling bevat per definitie patroon-strings (BEGIN ... KEY, db-URI's).
 # Die bestanden overslaan voorkomt valse HARD-hits op de eigen regex-definities.
 SELF_SKIP = {"validate.py", "anonymize.py"}
+
+
+_PRIVATE_PATTERNS = load_private_patterns()
 
 
 def _is_allowed(line: str) -> bool:
@@ -111,7 +151,7 @@ def scan_content(content: str, source: str) -> tuple[list, list]:
                 line_has_hard = True
 
         if not line_has_hard:
-            for name, pattern in SOFT_PATTERNS.items():
+            for name, pattern in {**SOFT_PATTERNS, **_PRIVATE_PATTERNS}.items():
                 m = re.search(pattern, line)
                 if m and not _is_allowed(m.group(0)):
                     soft_hits.append((i, name, snippet))

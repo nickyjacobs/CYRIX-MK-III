@@ -15,6 +15,7 @@
 
 - **Nooit echte secrets, IPs, tokens, klant-namen** committen — gebruik placeholders (`<target-ip>`, `<client-codenaam>`)
 - Persoonlijke en gevoelige data hoort in `context-private/` (gitignored), `CLAUDE.local.md`, of `.claude/rules-private/`
+- Zet je interne IP-ranges, interne domeinen en klant- of organisatienamen in `.claude/rules-private/gevoelige-termen.txt` (gitignored). `scripts/validate.py` leest die lijst en geeft een soft-warning zodra zo'n term in een te committen bestand opduikt. Zie `.claude/gevoelige-termen.example.txt` voor het formaat. Een generieke secret-scanner kan die termen niet kennen; deze lijst vult dat gat
 - Engagement-specifieke notes in `wiki/30-sessions/` (gitignored)
 - Bij twijfel: roep `security-reviewer` agent aan voor een scan
 
