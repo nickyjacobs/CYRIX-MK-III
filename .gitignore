@@ -4,6 +4,10 @@
 # Strategie: persoonlijke + gevoelige data lokaal houden, examples + skeletons committable.
 # Auto-commit door SessionEnd hook respecteert deze regels.
 
+# --- Gehoste websites (eigen privé-repos, blijven lokaal) ---
+# Elke site is een zelfstandige git-repo met eigen GitHub-remote + Vercel auto-deploy.
+sites/
+
 # --- Persoonlijke context (niet in publieke repo) ---
 context-private/
 CLAUDE.local.md
@@ -11,17 +15,18 @@ CLAUDE.local.md
 .mcp.local.json
 .claude/rules-private/
 
-# --- Wiki: sessions (gefaseerd: raw lokaal, processed committable) ---
-# Root sessions/-files: alles lokaal (handmatige writes, stubs etc.)
+# --- Wiki: sessions (volledig lokaal) ---
+# Sessie-logs blijven lokaal. De bestandsnamen zijn slugs van de eerste user-prompt
+# en lekken daarmee werkcontext, ook als de inhoud alleen metadata bevat.
+# In de publieke template staat alleen de mapstructuur.
 wiki/30-sessions/*
 !wiki/30-sessions/.gitkeep
 !wiki/30-sessions/raw/
 !wiki/30-sessions/processed/
-# Raw transcripts: NOOIT in publieke repo (kunnen secrets bevatten)
 wiki/30-sessions/raw/*
 !wiki/30-sessions/raw/.gitkeep
-# Processed sessions: committable — gedistilleerde versie, secrets zijn weg
-# (geen patroon nodig)
+wiki/30-sessions/processed/*
+!wiki/30-sessions/processed/.gitkeep
 
 # --- Wiki: andere persoonlijke content ---
 # 60-audits bevat ook blocked-commits-*.md met mogelijke secret-snippets, dus standaard lokaal.
@@ -29,6 +34,11 @@ wiki/30-sessions/raw/*
 wiki/60-audits/*
 !wiki/60-audits/.gitkeep
 !wiki/60-audits/lint/
+
+# Archives: gearchiveerde MEMORY-inzichten en oude notes zijn net zo persoonlijk
+# als MEMORY.md zelf. Alleen de mapstructuur is publiek.
+wiki/90-archives/*
+!wiki/90-archives/.gitkeep
 
 # Wiki context (examples committable, echte data lokaal)
 wiki/00-context/*.md
@@ -80,6 +90,22 @@ context-private/
 # Files met letterlijk "private" of "secret" als woord (niet als deel van naam zoals "secret-scan")
 **/*.private.md
 **/*.private.json
+
+# --- Vangnet: losse bestanden in de wiki-root ---
+# Obsidian laat geplakte afbeeldingen en losse notes in de vault-root landen.
+# De SessionEnd-hook committeerde die vroeger automatisch mee (zo belandden een
+# gespreksvoorbereiding en een module-screenshot in de publieke repo).
+# Alleen index.md hoort los in wiki/. Mappen blijven ongemoeid.
+wiki/*.md
+!wiki/index.md
+wiki/*.png
+wiki/*.jpg
+wiki/*.jpeg
+wiki/*.gif
+wiki/*.webp
+wiki/*.svg
+wiki/*.pdf
+wiki/*.canvas
 
 # --- Temp / scratch ---
 .tmp/

@@ -118,7 +118,7 @@ Hooks zijn user-defined shell commands, HTTP endpoints, LLM prompts of agents di
 
 ```json
 {
-  "type": "prompt",
+  "type": "prompt ",
   "prompt": "Should this command be allowed? $ARGUMENTS",
   "model": "claude-opus-4-1",
   "timeout": 30

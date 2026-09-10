@@ -220,12 +220,20 @@ if ! bash .claude/hooks/pre-commit-secret-scan.sh; then
     exit 0
 fi
 
-# === Stap 5: Auto-stage + auto-commit (brede scope) ===
-# Stage alleen toegestane paden
-git add wiki/ MEMORY.md docs/ 2>/dev/null || true
+# === Stap 5: Auto-stage + auto-commit (expliciete scope) ===
+# Stage alleen paden die bewust publiek zijn. Een brede 'git add wiki/' pakte ook
+# losse notes en geplakte afbeeldingen uit de vault-root mee; zo belandden een
+# gespreksvoorbereiding en een module-screenshot ongemerkt in de repo.
+# Persoonlijke wiki-content (00-context, 10-projects, 20-knowledge, 30-sessions,
+# 50-decisions, 90-archives) is gitignored en hoort hier niet bij.
+git add wiki/index.md wiki/_templates/ 2>/dev/null || true
+git add wiki/40-references/ wiki/60-audits/lint/ 2>/dev/null || true
+git add wiki/10-projects/index.md wiki/20-knowledge/index.md 2>/dev/null || true
+git add wiki/00-context/*.example.md wiki/50-decisions/log.example.md 2>/dev/null || true
+git add docs/ scripts/ integrations/ 2>/dev/null || true
 git add .claude/skills/ .claude/agents/ .claude/rules/ .claude/hooks/ .claude/settings.json 2>/dev/null || true
-git add scripts/ integrations/ 2>/dev/null || true
-git add ./*.md 2>/dev/null || true
+git add .claude-plugin/ 2>/dev/null || true
+git add README.md CLAUDE.md MEMORY.example.md LICENSE .gitignore .mcp.json .env.example 2>/dev/null || true
 
 # Alleen committen als er daadwerkelijk staged changes zijn
 if git diff --cached --quiet 2>/dev/null; then
@@ -235,15 +243,15 @@ if git diff --cached --quiet 2>/dev/null; then
         :
     fi
 else
-    commit_msg="Session ${today}: ${slug}
+    # Geen slug in de commit-message: die is afgeleid van de eerste user-prompt
+    # en lekt werkcontext in een publieke repo-history.
+    commit_msg="Session ${today}
 
 Auto-commit door SessionEnd hook.
 Reason: ${reason} · Tool-uses: ${tool_uses} · Changes: ${content_changes}
 Session-ID: ${session_id:-unknown}
 
-Raw log: ${raw_path} (gitignored)
-Processed: ${processed_path}
-
+Sessie-logs (raw en processed) blijven lokaal, zie wiki/30-sessions/.
 Run /process-sessions om kennis te distilleren naar 20-knowledge/, 50-decisions/, project-READMEs."
 
     git commit -m "${commit_msg}" 2>&1 | tail -3 || {
