@@ -157,8 +157,8 @@ Findings land in `wiki/60-audits/lint/`, with `_tracking.md` holding the `first-
 
 ## Documentation
 
-- [`docs/routines.md`](docs/routines.md) — cloud routine setup
-- [`docs/verificatie-fase1.md`](docs/verificatie-fase1.md) — fase 1 verification checklist
+- [`docs/routines.md`](docs/routines.md) — how audits are split between local and cloud
+- [`docs/archief/`](docs/archief/) — dated verification snapshots from earlier phases
 - [`integrations/dutchquill/README.md`](integrations/dutchquill/README.md) — DutchQuill integration details
 
 ## License

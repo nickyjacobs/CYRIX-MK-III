@@ -1,11 +1,26 @@
 {
   "name": "cyrix-mk-iii",
-  "version": "0.1.0",
-  "description": "CYRIX MK-III: persoonlijke executive-assistant skills en agents (search, ingest, dutch-write, sessie-distillatie, wiki-audit). Hooks zijn niet meegeleverd; die zijn CYRIX-pipeline-specifiek.",
-  "author": { "name": "Nicky Jacobs" },
+  "version": "0.2.0",
+  "description": "CYRIX MK-III: persoonlijke executive-assistant skills en agents (search, ingest, dutch-write, sessie-distillatie, wiki-audit). Hooks zijn niet meegeleverd; die zijn CYRIX-pipeline-specifiek. De /cert skill zit er bewust niet in: die gaat uit van een eigen certificeringstraject en eigen wiki-paden.",
+  "author": {
+    "name": "Nicky Jacobs"
+  },
   "homepage": "https://github.com/nickyjacobs/CYRIX-MK-III",
-  "keywords": ["executive-assistant", "wiki", "dutch-writing", "security", "soc", "knowledge-base"],
-  "skills": "./.claude/skills/",
+  "keywords": [
+    "executive-assistant",
+    "wiki",
+    "dutch-writing",
+    "security",
+    "soc",
+    "knowledge-base"
+  ],
+  "skills": [
+    "./.claude/skills/search/",
+    "./.claude/skills/ingest/",
+    "./.claude/skills/process-sessions/",
+    "./.claude/skills/einde-sessie/",
+    "./.claude/skills/dutch-write/"
+  ],
   "agents": [
     "./.claude/agents/security-reviewer.md",
     "./.claude/agents/session-curator.md",

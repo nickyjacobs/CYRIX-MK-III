@@ -1,4 +1,7 @@
 ---
+status: afgehandeld
+afgehandeld-op: 2026-09-10
+afgehandeld-in: wiki/60-audits/audit-2026-09-10-compleet.md
 audit-date: 2026-06-09
 audit-mode: daily
 findings-total: 14

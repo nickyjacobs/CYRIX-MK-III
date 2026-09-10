@@ -3,7 +3,9 @@ title: Docs-drift rapport — Claude Code references
 audit-date: 2026-06-10
 auditor: cyrix-docs-drift-claudecode (routine)
 scope: wiki/40-references/claude-code/
-status: actief
+status: superseded
+superseded-door: wiki/60-audits/audit-2026-09-10-compleet.md (finding M1)
+superseded-op: 2026-09-10
 ---
 
 # Docs-drift rapport: Claude Code references (2026-06-10)
