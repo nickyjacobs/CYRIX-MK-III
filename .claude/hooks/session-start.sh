@@ -71,6 +71,29 @@ if [[ -d wiki/60-audits ]]; then
     fi
 fi
 
+# Onverwerkte sessie-logs
+# Distillatie via /process-sessions is een handmatige stap. Zonder deze melding
+# valt het niet op dat de backlog oploopt, en Claude Code ruimt de onderliggende
+# transcripts na enkele weken op: wat dan niet verwerkt is, is niet meer te
+# reconstrueren buiten de prompts in de log zelf.
+if [[ -d wiki/30-sessions/raw ]]; then
+    raw_count=$(find wiki/30-sessions/raw -maxdepth 1 -name "*.md" -type f 2>/dev/null | wc -l | tr -d ' ')
+    if [[ "${raw_count}" -gt 0 ]]; then
+        oldest=$(find wiki/30-sessions/raw -maxdepth 1 -name "*.md" -type f 2>/dev/null \
+                 | sort | head -n 1 | xargs basename 2>/dev/null | cut -c1-10 || true)
+        echo "## Onverwerkte sessie-logs: ${raw_count}"
+        if [[ -n "${oldest}" ]]; then
+            echo "  Oudste: ${oldest}. Draai /process-sessions om ze te distilleren."
+        else
+            echo "  Draai /process-sessions om ze te distilleren."
+        fi
+        if [[ "${raw_count}" -ge 10 ]]; then
+            echo "  Let op: bij meer dan 10 logs zijn de oudste transcripts waarschijnlijk al opgeruimd."
+        fi
+        echo ""
+    fi
+fi
+
 # Wiki-audit reminder
 # De cloud-routine ziet alleen de publieke template; de persoonlijke wiki-content
 # is gitignored. De echte wiki-audit draait dus lokaal via @wiki-librarian.

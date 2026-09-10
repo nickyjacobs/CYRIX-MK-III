@@ -139,3 +139,6 @@ venv/
 node_modules/
 npm-debug.log
 yarn-error.log
+
+# Lokale state van de sessie-pipeline (ingest-marker). Machine-specifiek.
+.claude/state/

@@ -8,7 +8,11 @@ description: Verwerk raw sessie-logs uit wiki/30-sessions/raw/ via @session-cura
 ## Wanneer gebruiken
 
 - Na één of meerdere sessies: lees ingest-marker of scan raw/-folder, distilleer kennis naar wiki
-- Wekelijks als hygiëne — voorkomt dat raw/-folder vol loopt
+- Wekelijks als hygiëne, zodat de raw-folder niet vol loopt
+- **Tijdig**, want Claude Code ruimt transcripts na enkele weken op. De raw log bewaart de
+  user-prompts en de gewijzigde bestanden, maar het volledige verloop van de sessie zit alleen
+  in het transcript. Is dat opgeruimd, dan valt er aanzienlijk minder te distilleren. De
+  SessionStart-hook toont het aantal wachtende logs en waarschuwt vanaf tien.
 - Vóór een grote refactor van CYRIX zelf: oude inzichten naar boven halen
 
 ## Hoe het werkt

@@ -125,10 +125,17 @@ mkdir -p "wiki/30-sessions/raw" "wiki/30-sessions/processed"
     echo "# Sessie raw — ${timestamp}"
     echo ""
     if [[ -n "${transcript_path}" && -f "${transcript_path}" ]]; then
-        echo "## Eerste user-prompt"
+        echo "> Let op: Claude Code ruimt transcripts na enkele weken op. De prompts"
+        echo "> hieronder zijn daarom uit het transcript overgenomen, zodat deze log"
+        echo "> ook bruikbaar blijft als het originele bestand weg is."
         echo ""
-        python3 - <<PYEOF 2>/dev/null || echo "(geen prompt gevonden)"
+        echo "## User-prompts"
+        echo ""
+        python3 - <<PYEOF 2>/dev/null || echo "(geen prompts gevonden)"
 import json
+
+MAX_PROMPTS = 25
+MAX_CHARS = 700
 
 def user_text(e):
     if e.get('type') != 'user':
@@ -138,15 +145,26 @@ def user_text(e):
         c = ' '.join(x.get('text', '') for x in c if isinstance(x, dict) and x.get('type') == 'text')
     return str(c or '').strip()
 
+seen = 0
 try:
     with open("${transcript_path}") as f:
         for line in f:
             try: e = json.loads(line)
             except: continue
             t = user_text(e)
-            if t and len(t) > 5 and not t.startswith('<'):
-                print(t[:800])
+            # Sla system-reminders, tool-results en commando-echo's over
+            if not t or len(t) <= 5 or t.startswith('<'):
+                continue
+            if t.startswith('Caveat:') or t.startswith('[Request interrupted'):
+                continue
+            seen += 1
+            if seen > MAX_PROMPTS:
+                print(f"\n_(meer prompts volgden; afgekapt op {MAX_PROMPTS})_")
                 break
+            body = t[:MAX_CHARS]
+            if len(t) > MAX_CHARS:
+                body += " [...]"
+            print(f"{seen}. {body}\n")
 except Exception as ex:
     print(f"(error: {ex})")
 PYEOF
@@ -219,7 +237,10 @@ PYEOF
 } > "${processed_path}"
 
 # === Stap 3: Schrijf ingest-marker ===
-echo "${session_id}|${raw_path}|${processed_path}|${today}" >> /tmp/cyrix-ingest-backlog.txt
+# In de repo, niet in /tmp: die wordt bij elke herstart gewist, waardoor de
+# backlog-administratie stilletjes verdween.
+mkdir -p .claude/state
+echo "${session_id}|${raw_path}|${processed_path}|${today}" >> .claude/state/ingest-backlog.txt
 
 # === Stap 4: Pre-commit safety scan ===
 if ! bash .claude/hooks/pre-commit-secret-scan.sh; then

@@ -5,7 +5,9 @@ description: Handmatige sessie-afsluiting met interactieve focus-bevestiging. Vo
 
 # /einde-sessie
 
-> **Belangrijk:** sinds de auto-pipeline live is, hoef je deze skill **niet** standaard te gebruiken. SessionEnd hook (`.claude/hooks/session-end.sh`) handelt automatische sessie-afsluiting af bij sessie-einde. Deze skill is voor **handmatige override**.
+> **Belangrijk:** de SessionEnd-hook (`.claude/hooks/session-end.sh`) schrijft bij elk sessie-einde automatisch een raw en een processed log. Deze skill is voor **handmatige override** van die stap.
+>
+> **Wat NIET automatisch gaat:** het distilleren van die logs naar knowledge, decisions en project-updates. Dat is `/process-sessions`, en die moet je zelf aanroepen. De SessionStart-hook telt hoeveel logs er wachten. Laat de backlog niet oplopen: Claude Code ruimt transcripts na enkele weken op, en wat dan niet verwerkt is, is alleen nog te reconstrueren uit de prompts in de log zelf.
 
 ## Verhouding tot auto-pipeline
 
