@@ -39,6 +39,13 @@ wiki/60-audits/*
 # als MEMORY.md zelf. Alleen de mapstructuur is publiek.
 wiki/90-archives/*
 !wiki/90-archives/.gitkeep
+!wiki/90-archives/40-references/
+wiki/90-archives/40-references/*
+!wiki/90-archives/40-references/.gitkeep
+
+# Sources: ruwe bron-samenvattingen uit /ingest. Persoonlijk, alleen de map is publiek.
+wiki/sources/*
+!wiki/sources/.gitkeep
 
 # Wiki context (examples committable, echte data lokaal)
 wiki/00-context/*.md

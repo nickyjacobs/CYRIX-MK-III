@@ -25,9 +25,9 @@ CYRIX is a Claude Code workspace that helps you plan, organise, research, write 
 Core ideas:
 
 - **Wiki-LLM pattern** — Obsidian-compatible vault as a subdirectory, lazy-lookup via `wiki/index.md` first (max 5 pages per question, grep fallback).
-- **Auto session-closure** — Stop-hook triggers `/einde-sessie` when substantial work happened, writing knowledge to wiki + merging into `MEMORY.md` without manual ceremony.
+- **Auto session-closure** — the SessionEnd hook writes a session log and auto-commits without manual ceremony; `/process-sessions` then distils the backlog into wiki knowledge.
 - **Doc-ingest** — `/ingest <URL>` crawls multi-page docs into structured local references with master-index, frontmatter, and review-date.
-- **Wiki audits** — daily/weekly/monthly cloud routines lint the wiki for broken links, stale references, missing frontmatter, archives candidates.
+- **Wiki audits** — `wiki-librarian` lints the wiki for broken links, stale references, missing frontmatter and archives candidates, in three escalating modes.
 - **Tavily quota-fallback** — `/search` skill degrades gracefully to WebFetch + WebSearch instead of erroring.
 - **DutchQuill integration** — Dutch writing style guides imported as references (MIT), applied via `/dutch-write` skill.
 
@@ -66,19 +66,19 @@ CYRIX-MK-III/
 ├── .claude/
 │   ├── rules/             5 public rules (writing, security, commits, comms)
 │   ├── rules-private/     personal overrides (gitignored)
-│   ├── skills/            /search, /ingest, /einde-sessie, /dutch-write
-│   ├── agents/            security-reviewer, wiki-librarian
-│   ├── hooks/             SessionStart, Stop, pre/post-edit secret scans
+│   ├── skills/            /search, /ingest, /process-sessions, /einde-sessie, /dutch-write, /cert
+│   ├── agents/            security-reviewer, session-curator, wiki-librarian
+│   ├── hooks/             SessionStart, SessionEnd, Stop, pre/post-edit secret scans
 │   └── settings.json      hook configuration
 ├── wiki/                  Obsidian-compatible vault (lazy-lookup)
 │   ├── 00-context/        profile, work, team, priorities, goals
 │   ├── 10-projects/       active projects
 │   ├── 20-knowledge/      knowledge notes (Zettelkasten-style)
-│   ├── 30-sessions/       auto-generated session logs (gitignored)
+│   ├── 30-sessions/       auto-generated session logs (gitignored: raw + processed)
 │   ├── 40-references/     doc-ingest output
 │   ├── 50-decisions/      append-only decisions log
 │   ├── 60-audits/         wiki-librarian audit reports
-│   └── 90-archives/       superseded/old content (never delete)
+│   └── 90-archives/       superseded/old content (gitignored, never delete)
 ├── docs/                  routines setup, verification checklist
 ├── integrations/          external integrations (e.g. dutchquill/)
 └── scripts/               validate.py, check_verboden_woorden.py, setup.sh, statusline.example.sh
@@ -90,21 +90,25 @@ CYRIX-MK-III/
 |---|---|
 | `/search <query>` | Tavily → WebFetch → WebSearch fallback chain |
 | `/ingest <URL\|text>` | Crawl docs into wiki/40-references/ with master-index |
-| `/einde-sessie` | Close session: write log, merge MEMORY, append decisions |
+| `/process-sessions` | Distil raw session logs into wiki content via `session-curator` |
+| `/einde-sessie` | Manual session close (the SessionEnd hook does this automatically) |
 | `/dutch-write <text>` | Rewrite Dutch text per DutchQuill rules |
+| `/cert <slug>` | Certification study session: process `_inbox/`, load cert status |
 
 ## Agents
 
 | Agent | Trigger | Purpose |
 |---|---|---|
 | `security-reviewer` | post-edit hook + manual | Read-only secret-scan (Haiku) |
-| `wiki-librarian` | manual `@wiki-librarian daily\|weekly\|monthly` or cloud routine | Wiki audits with escalation |
+| `session-curator` | `/process-sessions` or `@session-curator` | Turns raw session logs into knowledge, decisions and project updates (dry-run first) |
+| `wiki-librarian` | manual `@wiki-librarian daily\|weekly\|monthly` | Wiki audits with escalation via `_tracking.md`. Run locally: a cloud checkout does not contain the gitignored personal wiki content |
 
 ## Hooks
 
-- **SessionStart** — injects MEMORY + priorities + recent sessions
-- **Stop (smart-trigger)** — runs `/einde-sessie` automatically when substantial work happened (content changes OR ≥10 tool-uses)
-- **PreToolUse (Edit\|Write\|MultiEdit)** — hard-blocks secrets in new content
+- **SessionStart** — injects MEMORY, priorities, recent sessions, open audit findings, and a reminder when the last wiki audit is over 14 days old
+- **SessionEnd** (`clear\|resume\|logout\|prompt_input_exit\|other`) — writes a raw log (gitignored) plus a processed log, runs the pre-commit secret scan, and auto-commits an explicit list of public paths. Never pushes
+- **Stop (smart-trigger)** — writes a stub log when substantial work happened without a formal close (content changes OR ≥10 tool-uses)
+- **PreToolUse (Edit\|Write\|MultiEdit)** — hard-blocks secrets in new content (exit 2)
 - **PostToolUse (Edit\|Write\|MultiEdit)** — re-scans disk, runs Dutch style advisory on relevant files
 
 ## Optional features
@@ -136,13 +140,14 @@ chmod +x .claude/statusline.sh
 
 The hint thresholds and color codes are easy to tweak — edit the `_rl_color` function and the `used_pct_int` checks at the bottom of the script.
 
-## Cloud routines (optional)
+## Audits
 
-Setup three scheduled audits via Claude Code routines — see [`docs/routines.md`](docs/routines.md):
+Audits are split by what each environment can actually see — see [`docs/routines.md`](docs/routines.md):
 
-- Daily 09:00 — light lint
-- Weekly Sunday 18:00 — structure audit
-- Monthly 1st 18:00 — deep audit
+- **Local** (`@wiki-librarian daily\|weekly\|monthly`) — the full wiki, including the gitignored personal content. The SessionStart hook reminds you when it has been over 14 days.
+- **Cloud routines** (optional) — a weekly docs-drift check on `wiki/40-references/claude-code/` against the live Claude Code docs, and a monthly template lint. A cloud checkout only contains the public template, so it cannot audit your personal notes.
+
+Findings land in `wiki/60-audits/lint/`, with `_tracking.md` holding the `first-seen` state that drives escalation between cadences.
 
 ## Roadmap
 

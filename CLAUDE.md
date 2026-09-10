@@ -19,13 +19,18 @@ Schrijf NIET handmatig naar de wiki — gebruik daarvoor `/ingest` of `/einde-se
 
 **Skills.** Beschikbare slash-commands:
 
-- `/search <query>` — Tavily → WebFetch → WebSearch fallback-keten.
-- `/ingest <bron>` — raw tekst of URL naar `wiki/40-references/` of `wiki/sources/`, met master-index en frontmatter.
-- `/einde-sessie` — sessie afsluiten: schrijft naar `wiki/30-sessions/`, update MEMORY.md, append `decisions/log.md` indien van toepassing.
-- `/dutch-write <tekst>` — Nederlandse tekst herschrijven volgens DutchQuill-regels en eigen schrijfregels.
+- `/search <query>`: Tavily met automatische fallback naar WebFetch en WebSearch.
+- `/ingest <bron>`: raw tekst of URL naar `wiki/40-references/` of `wiki/sources/`, met master-index en frontmatter.
+- `/process-sessions`: raw sessie-logs distilleren naar wiki-content via `session-curator`. Standaardmanier om de backlog te verwerken die de SessionEnd-hook achterlaat.
+- `/einde-sessie`: handmatige sessie-afsluiting. Alleen nodig als je de automatische pipeline wil overschrijven; de SessionEnd-hook doet dit normaal zelf.
+- `/dutch-write <tekst>`: Nederlandse tekst herschrijven volgens DutchQuill-regels en eigen schrijfregels.
+- `/cert <slug>`: cert-studiesessie (cpts, crtp, oscp). Verwerkt de `_inbox/` naar module-notes en laadt de cert-status. Alleen handmatig aan te roepen.
 
 **Agents.**
-- `security-reviewer` — read-only secret-scan op edits.
+
+- `security-reviewer`: read-only secret-scan op edits.
+- `session-curator`: distilleert raw sessie-logs naar knowledge, decisions en project-updates. Werkt in dry-run tot je akkoord geeft.
+- `wiki-librarian`: wiki-health-audit in drie modi (`daily`, `weekly`, `monthly`). Draai lokaal, want de cloud-checkout bevat de persoonlijke wiki-content niet.
 
 **Memory.** `MEMORY.md` bevat persistente inzichten en voorkeuren. Wordt door `/einde-sessie` gemerged (deduplicatie), nooit blind appended.
 

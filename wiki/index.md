@@ -1,6 +1,6 @@
 ---
 title: CYRIX wiki — index
-updated: 2026-06-09
+updated: 2026-09-10
 category: index
 status: active
 ---
@@ -16,13 +16,13 @@ Lazy-lookup catalogus. Begin hier, open maximaal 3 sub-pagina's per vraag.
 ## 📋 Context
 *Wie ben ik, wat doe ik, waar werk ik naartoe*
 
-- [[00-context/me.example|Profiel]] · *(kopieer naar `me.md`)*
-- [[00-context/work.example|Werk]]
-- [[00-context/team.example|Team]]
-- [[00-context/current-priorities.example|Huidige prioriteiten]]
-- [[00-context/goals.example|Doelen en mijlpalen]]
+- [[00-context/me|Profiel]]
+- [[00-context/work|Werk]]
+- [[00-context/team|Team]]
+- [[00-context/current-priorities|Huidige prioriteiten]]
+- [[00-context/goals|Doelen en mijlpalen]]
 
-> Bij eerste setup: kopieer elk `.example.md` naar `<naam>.md` en vul je eigen data in. De `.md` versies zijn gitignored, blijven dus lokaal.
+> Bij eerste setup: kopieer elk `.example.md` naar `<naam>.md` en vul je eigen data in. De `.md` versies zijn gitignored, blijven dus lokaal. Tot die kopie bestaat wijzen bovenstaande links nergens heen.
 
 </div>
 
@@ -49,14 +49,14 @@ Zie [[20-knowledge/index|Knowledge-overzicht]] of browse `20-knowledge/`.
 ## 📝 Sessies
 *Auto-gegenereerde sessie-logs (lokaal)*
 
-Browse `30-sessions/` voor recente logs. Wordt aangevuld door `/einde-sessie`.
+De SessionEnd-hook schrijft bij elk sessie-einde een raw log naar `30-sessions/raw/` en een processed log naar `30-sessions/processed/`. Beide blijven lokaal. Met `/process-sessions` distilleer je die backlog naar knowledge, decisions en project-updates; de gecureerde logs komen in `30-sessions/` zelf.
 
 </div>
 
 <div class="bento-card cat-references">
 
 ## 📚 References
-*Externe documentatie, ingestueerd via `/ingest-docs`*
+*Externe documentatie, ingestueerd via `/ingest`*
 
 Zie [[40-references/index|References-overzicht]] of browse `40-references/`.
 
@@ -76,16 +76,16 @@ Zie [[40-references/index|References-overzicht]] of browse `40-references/`.
 ## 🔍 Audits
 *Wiki-audit-rapporten (daily, weekly, monthly)*
 
-Browse `60-audits/`. Gegenereerd door `wiki-librarian` routine.
+Browse `60-audits/`. Draai `@wiki-librarian daily` lokaal voor een scan van de volledige wiki; een cloud-routine ziet de gitignorede content niet. De findings-state staat in `60-audits/lint/_tracking.md`.
 
 </div>
 
 <div class="bento-card cat-archives">
 
 ## 📦 Archives
-*Afgeronde projecten, oude notes — bewaard niet verwijderd*
+*Afgeronde projecten, oude notes, bewaard in plaats van verwijderd*
 
-Browse `90-archives/`.
+Browse `90-archives/`. Vervangen references gaan naar `90-archives/40-references/`, oude MEMORY-inzichten naar `90-archives/memory-archive.md`.
 
 </div>
 
@@ -98,7 +98,7 @@ Browse `90-archives/`.
 1. Begin altijd hier — niet direct grep'en
 2. Open max 3 sub-pagina's per vraag
 3. Bij brede onderwerpen: grep fallback (`grep -r "term" wiki/`)
-4. Schrijf niet handmatig — gebruik `/ingest` of `/einde-sessie`
+4. Schrijf niet handmatig, gebruik `/ingest` of `/process-sessions`
 5. Verwijder nooit — verplaats naar `90-archives/`
 
 ## Frontmatter-conventie

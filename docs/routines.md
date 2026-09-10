@@ -1,6 +1,6 @@
-# CYRIX MK-III — Cloud routines
+# CYRIX MK-III: wiki-audits en cloud-routines
 
-> Setup-gids voor `wiki-librarian` cloud-routines via de `/schedule`-skill of de web-UI.
+> Hoe de wiki-audit is ingericht: lokaal voor de volledige wiki, cloud voor wat publiek staat.
 > Geverifieerd tegen de officiele docs op 2026-06-10: https://code.claude.com/docs/en/routines
 
 ## Wat zijn routines
@@ -9,15 +9,41 @@
 
 Voor CYRIX gebruiken we een schedule-trigger om de `wiki-librarian` agent op drie cadansen automatisch te draaien.
 
-## De drie wiki-routines
+## Wat een cloud-routine wel en niet kan zien
 
-| Naam | Cadans | Mode | Doel |
-|---|---|---|---|
-| `cyrix-wiki-audit-daily` | Elke dag rond 09:00 | daily | Lichte lint: broken links, frontmatter, orphans, lege notes |
-| `cyrix-wiki-audit-weekly` | Wekelijks (zondag) | weekly | Structuur-consistentie, duplicates, openstaande TODOs |
-| `cyrix-wiki-audit-monthly` | 1e van de maand | monthly | Diepe audit: archives, MEMORY-opschoning, stale references |
+Een routine kloont de repo. De persoonlijke wiki-content is gitignored en zit dus **niet** in die
+checkout: `00-context/`, `10-projects/`, `20-knowledge/`, `30-sessions/`, `50-decisions/` en
+`90-archives/` ontbreken volledig. Een cloud-routine die `@wiki-librarian` draait, auditeert
+daarom een vrijwel lege template en niet jouw wiki.
 
-Findings landen in `wiki/60-audits/`. Escalerend mechanisme: ongelegen findings rijzen door naar de volgende cadens.
+Daarom is de audit gesplitst.
+
+### Lokaal: de volledige wiki
+
+Draai in een gewone sessie:
+
+```text
+@wiki-librarian daily
+@wiki-librarian weekly
+@wiki-librarian monthly
+```
+
+Dit is de enige manier waarop de persoonlijke content geauditeerd wordt. De SessionStart-hook
+herinnert je eraan zodra de laatste lokale audit meer dan 14 dagen oud is.
+
+### Cloud: wat wel publiek staat
+
+| Naam | Cadans | Doel |
+|---|---|---|
+| `cyrix-docs-drift-claudecode` | Wekelijks, maandag 08:00 lokaal (`0 6 * * 1` UTC) | Vergelijkt `wiki/40-references/claude-code/` met de actuele docs op code.claude.com en rapporteert nieuwe, gewijzigde en verdwenen pagina's |
+| `cyrix-template-lint` | Maandelijks, 1e om 08:00 lokaal (`0 6 1 * *` UTC) | Links, frontmatter en structuur van de publieke template: index-pagina's, `_templates/`, `.example`-bestanden, `40-references/` |
+
+Findings landen in `wiki/60-audits/lint/` via een pull request. De state staat in
+`wiki/60-audits/lint/_tracking.md`, waarin elke finding een `first-seen` krijgt zodat het
+escalatiemechanisme tussen cadansen werkt.
+
+> Let op: de cron-expressies staan in UTC. In de zomertijd (CEST) is 06:00 UTC gelijk aan 08:00
+> lokaal, in de wintertijd (CET) aan 07:00 lokaal. Er is geen automatische correctie.
 
 ## Vereisten
 
@@ -38,26 +64,22 @@ Standaard mag een routine alleen pushen naar branches met een `claude/`-prefix, 
 
 ## Setup via `/schedule` (CLI)
 
-`/schedule` maakt schedule-routines conversationeel aan en slaat ze op je account op. CLI-presets zijn hourly, daily, weekdays en weekly.
+`/schedule` maakt routines conversationeel aan en slaat ze op je account op.
+
+**Eerst koppelen.** Zonder gekoppeld GitHub-account weigert de API elke routine die een
+repository gebruikt, met `Connect your GitHub account before saving a routine that uses a
+GitHub repository`. Draai eenmalig `/web-setup` en probeer het daarna opnieuw.
 
 ```text
-/schedule daily om 09:00 in repo nickyjacobs/CYRIX-MK-III: draai @wiki-librarian daily,
-schrijf de audit naar wiki/60-audits/ en open een PR met het rapport
+/schedule wekelijks op maandag om 08:00 in repo nickyjacobs/CYRIX-MK-III: vergelijk
+wiki/40-references/claude-code/ met de actuele docs op code.claude.com, schrijf een
+drift-rapport naar wiki/60-audits/lint/ en open een PR
 ```
 
-```text
-/schedule wekelijks op zondag om 18:00 in repo nickyjacobs/CYRIX-MK-III: draai
-@wiki-librarian weekly, schrijf naar wiki/60-audits/ en open een PR
-```
+De prompt moet volledig zelfstandig zijn: de cloud-sessie start koud, zonder jouw CLAUDE.md-context.
+Vermeld daarom expliciet dat de persoonlijke wiki-mappen ontbreken en dat dat geen finding is.
 
-De **monthly** routine kan niet rechtstreeks als preset. Maak 'm eerst als weekly aan, en zet daarna de cron om via:
-
-```text
-/schedule update
-# kies de monthly-routine, zet cron op: 0 18 1 * * (1e van de maand, 18:00 lokaal)
-```
-
-Minimum-interval is 1 uur. Tijden zijn in je lokale zone en worden automatisch omgezet. Runs starten mogelijk een paar minuten later door stagger.
+Minimum-interval is 1 uur. Runs starten mogelijk een paar minuten later door stagger.
 
 ## Setup via de web-UI (alternatief)
 
@@ -90,16 +112,10 @@ Wil je geen cloud, dan kan het lokaal, maar dan moet je machine draaien:
 - **Desktop scheduled tasks** ([docs](https://code.claude.com/docs/en/desktop-scheduled-tasks)): in de Desktop-app kies je bij **New routine** voor **Local** in plaats van **Remote**.
 - **In-sessie scheduling** via `/loop` of de scheduled-tasks-mechaniek ([docs](https://code.claude.com/docs/en/scheduled-tasks)): draait alleen zolang de CLI-sessie openstaat.
 
-## Handmatig draaien
-
-Altijd mogelijk vanuit de CYRIX-werkomgeving, zonder routine:
-
-```text
-@wiki-librarian daily
-@wiki-librarian weekly
-@wiki-librarian monthly
-```
-
 ## Wijzigingslog
 
+- **2026-09-10:** audit-opzet gesplitst. De cloud-routine kan de gitignorede wiki-content niet
+  zien, dus `@wiki-librarian` draait voortaan lokaal en de cloud doet alleen docs-drift en
+  template-lint. Vereiste `/web-setup` toegevoegd; zonder gekoppeld GitHub-account weigert de
+  routines-API elke repo-gebonden routine.
 - **2026-06-10:** doc gecorrigeerd. De eerdere versie documenteerde een niet-bestaand `claude routine create --schedule` commando en een fout auth-model (`.env GITHUB_TOKEN` voor cloud-push). Vervangen door de echte `/schedule`-skill plus web-UI, en het correcte GitHub-identiteit-model.

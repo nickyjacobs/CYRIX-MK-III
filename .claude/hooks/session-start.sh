@@ -61,13 +61,35 @@ if [[ -d wiki/60-audits ]]; then
     # Alleen rapporten die nog openstaan; een afgehandeld rapport krijgt
     # 'status: done' in de frontmatter en verdwijnt dan uit deze melding.
     old=$(find wiki/60-audits -name "*.md" -mtime +7 -type f 2>/dev/null \
-          | xargs grep -l '^status: open' 2>/dev/null | head -n 3)
+          | xargs grep -l '^status: open' 2>/dev/null | head -n 3 || true)
     if [[ -n "${old}" ]]; then
         echo "## Audit-findings ouder dan 7 dagen"
         while IFS= read -r a; do
             echo "  - $(basename "$a")"
         done <<< "${old}"
         echo ""
+    fi
+fi
+
+# Wiki-audit reminder
+# De cloud-routine ziet alleen de publieke template; de persoonlijke wiki-content
+# is gitignored. De echte wiki-audit draait dus lokaal via @wiki-librarian.
+if [[ -d wiki/60-audits/lint ]]; then
+    last_audit=$(find wiki/60-audits/lint -name "*audit*.md" -type f 2>/dev/null \
+                 | xargs ls -t 2>/dev/null | head -n 1 || true)
+    if [[ -z "${last_audit}" ]]; then
+        echo "## Wiki-audit"
+        echo "  Nog geen lokale wiki-audit gedraaid. Start met: @wiki-librarian daily"
+        echo ""
+    else
+        last_mtime=$(stat -f %m "${last_audit}" 2>/dev/null || echo 0)
+        audit_age=$(( ( $(date +%s) - last_mtime ) / 86400 ))
+        if [[ "${audit_age}" -gt 14 ]]; then
+            echo "## Wiki-audit"
+            echo "  Laatste lokale audit was ${audit_age} dagen geleden ($(basename "${last_audit}"))."
+            echo "  Draai @wiki-librarian daily voor een verse scan van de volledige wiki."
+            echo ""
+        fi
     fi
 fi
 
