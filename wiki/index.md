@@ -1,6 +1,7 @@
 ---
-title: CYRIX wiki — index
+title: CYRIX wiki, index
 updated: 2026-09-10
+tags: [index, catalogus]
 category: index
 status: active
 ---
@@ -106,8 +107,12 @@ Browse `90-archives/`. Vervangen references gaan naar `90-archives/40-references
 Minimum per pagina: `title`, `tags`, `category`, `status`. De datum-velden zijn categorie-afhankelijk:
 
 - `10-projects/`, `20-knowledge/`: `created` + `updated`
-- `40-references/`: `ingest-date` + `review-date` (+ `source-url`)
+- `40-references/`: `ingest-date` + `review-date` (+ `source-url`) voor de reference-pagina's zelf. De ingest-log (`log.md`) is een audit-trail en houdt `created` + `updated`
 - `30-sessions/`: `date`
 - `index.md`-landingspagina's: geen datum-velden nodig
+
+Bestandsnamen zijn kebab-case, met één uitzondering: de DutchQuill-gidsen in
+`40-references/dutchquill/` houden hun oorspronkelijke naam met underscores, zodat de relatie met
+de bron herkenbaar blijft.
 
 Templates in [`_templates/`](./_templates/).
