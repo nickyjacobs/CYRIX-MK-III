@@ -13,6 +13,7 @@ Externe documentatie, ingestueerd via `/ingest`. Anders dan projecten/knowledge 
 
 - [[40-references/claude-code/overview|Claude Code]] — officiële Claude Code documentatie (slash-commands, settings, overview, ...)
 - `dutchquill/` — DutchQuill schrijfstijl-gidsen
+- [[40-references/cpts-tips-brm|CPTS Tips — BRM | Cybersecurity]] — videotips voor het HTB CPTS-traject
 - [[40-references/log|Ingest-log]] — append-only audit-trail van wat wanneer is ingestueerd
 
 ## Conventie

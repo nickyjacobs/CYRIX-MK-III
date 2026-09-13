@@ -24,6 +24,13 @@ Append-only log van alle `/ingest` en `/ingest-docs` aanroepen. Audit-trail voor
 
 ---
 
+## 2026-09-13 — cpts-tips-brm (initial)
+**Bron:** YouTube-video "15 Tips That Got Me Through HTB CPTS", BRM | Cybersecurity (2025-06-05), aangeleverd als dictafoon-transcript, geen URL beschikbaar
+**Pagina's:** 1
+**Pad:** `wiki/40-references/cpts-tips-brm.md`
+**Trigger:** initial
+**Notities:** Transcript bevatte 1 ASR-fout ("Flag 14" → "Tip 14"), gecorrigeerd in curatie. Kernidee "procedures" herdoopt tot "methodology checklist" (overleg met gebruiker), toegepast in `wiki/10-projects/certifications/cpts.md`.
+
 ## 2026-06-09 — claude-code (initial)
 **Bron:** https://code.claude.com/docs/en/overview
 **Pagina's:** 9 (agent-teams, cli-reference, hooks, mcp, memory, overview, settings, skills, sub-agents)
