@@ -59,6 +59,27 @@ Append-only log van alle `/ingest` en `/ingest-docs` aanroepen. Audit-trail voor
 **Trigger:** re-ingest — o.b.v. docs-drift rapport (PR #3, routine `cyrix-docs-drift-claudecode`)
 **Notities:** Bestaande detail behouden, frontmatter ververst (ingest-date 2026-06-10, review-date 2026-09-10), cli-reference source-url gecorrigeerd (cli-usage werd cli-reference). Per pagina een "Update 2026-06-10 (docs-drift)" sectie met nieuwe events/commands/keys. Oude versies in git-history (geen aparte archive). De overige 39 nieuwe pagina's uit het drift-rapport zijn nog niet ge-ingest.
 
+## 2026-09-14 — ninja-possiblecooker-mc1101eu (initial, foutief model — zie correctie)
+**Bron:** officiële meertalige handleiding-PDF, https://gzhls.at/blob/ldb/6/6/c/b/e89ee206a7217918aab32777fe23945d6a3d.pdf (via ninjakitchen.eu, Tavily API-key ontbrak → WebSearch+WebFetch fallback gebruikt)
+**Pagina's:** 1 (47-pagina's PDF, NL-gedeelte p.6-9 gebruikt als basis)
+**Pad:** ~~`wiki/40-references/ninja-possiblecooker-mc1101eu.md`~~ (verwijderd, zie correctie-entry hieronder)
+**Trigger:** initial — op verzoek voor het Gezondheid-project (diner meal-prep)
+**Notities:** Model MC1101EU, 6L kookpot, 8 functies (SLOW COOK/STEAM/SEAR-SAUTÉ/KEEP WARM/WHITE RICE/BROWN RICE/BRAISE/PASTA). Bleek het verkeerde model — Nicky's apparaat is de MC1001EU (PRO-lijn, 8L). Pagina vervangen, zie 2026-09-14 correctie-entry.
+
+## 2026-09-14 — ninja-possiblecooker-mc1001eu (correctie 1, juiste modelnummer maar nog verkeerde functieset)
+**Bron:** ManualsLib-gids MC1001COMB (VS-variant), https://www.manualslib.com/guide/3612866/ninja-foodi-possiblecooker-pro-mc1001comb-multi-cooker-manual.html — via WebFetch
+**Pagina's:** 1
+**Pad:** `wiki/40-references/ninja-possiblecooker-mc1001eu.md`
+**Trigger:** correctie — Nicky bevestigde het echte modelnummer (MC1001EU, PRO-lijn, 8L) nadat eerst de MC1101EU (Everyday, 6L) was vastgelegd
+**Notities:** Aangenomen functieset SLOW COOK/SEAR-SAUTÉ/STEAM/KEEP WARM/SOUS VIDE/BRAISE/BAKE/PROOF o.b.v. de Amerikaanse COMB-variant. Bleek niet te kloppen voor de EU-versie, zie correctie 2.
+
+## 2026-09-14 — ninja-possiblecooker-mc1001eu (correctie 2, functieset op basis van foto + UK-gids)
+**Bron:** ManualsLib-gids MC1001UK, https://www.manualslib.com/guide/3267704/ninja-foodi-mc1001uk-possiblecooker-8-in-1-slow-cooker-manual.html — via WebFetch, plus foto van Nicky's eigen bedieningspaneel
+**Pagina's:** 1 (herschreven)
+**Pad:** `wiki/40-references/ninja-possiblecooker-mc1001eu.md`
+**Trigger:** correctie — Nicky's foto van het echte bedieningspaneel toonde SIMMER en PROVE, geen SOUS VIDE
+**Notities:** Definitieve functieset: SLOW COOK/SEAR-SAUTÉ/STEAM/BRAISE/SIMMER/BAKE/PROVE/KEEP WARM. Braise en Simmer draaien beide vast op 99°C. Pot oven-vast tot 260°C (niet 240°C zoals bij de Everyday-lijn), niet kookplaat-veilig.
+
 ## 2026-06-10 — claude-code (partial update, HOOG-prioriteit drift-pagina's)
 **Bron:** WebFetch op https://code.claude.com/docs/en/{commands,agent-view,permissions,env-vars,channels,channels-reference,advisor,permission-modes,model-config,debug-your-config}
 **Pagina's:** 10 nieuw (commands, agent-view, permissions, env-vars, channels, channels-reference, advisor, permission-modes, model-config, debug-your-config)
