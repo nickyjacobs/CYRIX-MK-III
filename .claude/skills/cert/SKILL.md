@@ -48,7 +48,7 @@ Check `certifications/<slug>/_inbox/`:
 
 - **Leeg?** Meld dat, blijf in sessie-modus klaar om notes/screenshots te verwerken die de gebruiker live in de chat deelt.
 - **Gevuld?** Sorteer elk item:
-  - **Tekst** (.md, .txt, geplakte notes): bepaal de module via (a) expliciete hint (bestandsnaam of een `module:`-regel bovenaan), (b) de inhoud (tools en technieken), (c) vraag bij twijfel. Distilleer naar `modules/<module>.md` volgens de vaste structuur. Merge of append, overschrijf nooit bestaande inhoud.
+  - **Tekst** (.md, .txt, geplakte notes): bepaal de module via (a) expliciete hint (bestandsnaam of een `module:`-regel bovenaan), (b) de inhoud (tools en technieken), (c) vraag bij twijfel. Distilleer naar `modules/<module>.md`, gebaseerd op `wiki/_templates/cert-module.md`. Theorie zonder eigen target: samenvatten in eigen woorden (checklist-stijl), niet verbatim overnemen — een pure theorie-module gebruikt de "Kernstof (samengevat)"-variant van het template en laat "Output en bevindingen"/"Screenshots" weg. Merge of append, overschrijf nooit bestaande inhoud.
   - **Afbeeldingen** (.png, .jpg, .jpeg, ...): verplaats naar `attachments/`, hernoem `<module>-<kort-onderwerp>-NN.ext`, en link op de juiste plek in de module-note met `![](../attachments/<bestand>)`.
 - Na verwerking: maak de inbox leeg door verwerkte bestanden naar `_inbox/processed/` te verplaatsen (niet zomaar verwijderen).
 
@@ -68,18 +68,9 @@ Kort: wat verwerkt is en waarheen, de nieuwe voortgang (X/totaal), en waar de ge
 
 ## Module-note structuur
 
-```markdown
-# <Module>
-
-**Tier:** <0/I/II> · **Status:** bezig/af · **Tijd:** <ingeschat>
-
-## Doel
-## Commando's en technieken
-## Output en bevindingen
-## Geleerd
-## Herbruikbare technieken
-## Screenshots
-```
+Basis: `wiki/_templates/cert-module.md` (frontmatter + zes secties, met een
+theorie-variant voor modules zonder eigen hands-on target). Niet los dupliceren hier,
+het template is de bron van waarheid.
 
 ## Note-taking principes
 
