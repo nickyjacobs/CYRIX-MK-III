@@ -39,6 +39,8 @@ Eén regel per finding, met `first-seen` in ISO-formaat. Bij oplossing verhuist 
 | Content-drift: config-scopes, transport-types (SSE deprecated) en CLI-commando's verouderd | `wiki/40-references/claude-code/mcp.md` | 2026-09-10 | weekly | open |
 | Content-drift: auto memory type-taxonomie, AGENTS.md, CLAUDE.local.md ontbreken | `wiki/40-references/claude-code/memory.md` | 2026-09-10 | weekly | open |
 | Nieuwe HOOG-prioriteit pagina's nog niet geingest (hooks-guide, scheduled-tasks, settings-reference, workflows, agents, cross-session-messaging, tools-reference) | `wiki/40-references/claude-code/` | 2026-09-10 | weekly | open |
+| Nieuwe MIDDEN-prioriteit pagina's nog niet geingest (claude-directory, worktrees, settings-example, plugins-reference, artifacts, goal, security-guidance, fast-mode) | `wiki/40-references/claude-code/` | 2026-09-21 | weekly | open |
+| Herhaling 2026-09-21: alle findings van de 2026-09-10-audit nog onopgelost, plus aanvullend `omitClaudeMd`-veld en volledige scope/prioriteitstabel (Managed settings hoogste laag) ontbreken in `sub-agents.md` | `wiki/40-references/claude-code/sub-agents.md` | 2026-09-21 | weekly | open |
 
 ## Opgelost
 
