@@ -13,10 +13,10 @@ ip:
 url: 
 ---
 
-<!-- Kopieer dit bestand (of voeg het toe als Obsidian-template via Settings >
-     Templates) en vul in. Sync: als checklists/enumeratie.md,
-     checklists/initial-foothold.md of checklists/linux-privesc.md wijzigt, werk de
-     stappen hieronder dan ook bij. -->
+<!-- Sync: als checklists/enumeratie.md, checklists/initial-foothold.md of
+     checklists/linux-privesc.md wijzigt, werk de stappen hieronder dan ook bij.
+     Live als Obsidian-template op kali-cpts: .../offensive/Templates/Box-note.md
+     (Settings > Templates). Wijzig bij updates beide kopieën. -->
 
 # [Box-naam]
 
@@ -114,6 +114,10 @@ Zie ook: [[enumeratie]] · [[initial-foothold]] · [[linux-privesc]]
   sudo -l
   ```
 - [ ] LinEnum/LinPEAS
+  ```bash
+  /opt/tools/privesc/linux/linpeas/linpeas.sh
+  /opt/tools/privesc/linux/linenum/LinEnum.sh
+  ```
 - [ ] Schrijfbare bestanden die als root draaien (sudoers/cron)
 - [ ] SSH-keys (leesbaar `/root/.ssh/id_rsa`?)
 - [ ] SUID-binaries
