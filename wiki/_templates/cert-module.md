@@ -34,7 +34,7 @@ status: bezig
 ## Herbruikbare technieken
 
 <!-- Korte bullets + link naar de bijpassende wiki/20-knowledge/-cheatsheet-note
-     (bv. [[../../../20-knowledge/linux-web-privesc-technieken]]) in plaats van
+     (bv. [[../../../../20-knowledge/linux-web-privesc-technieken]]) in plaats van
      commando's dubbel te documenteren. -->
 
 ## Screenshots
