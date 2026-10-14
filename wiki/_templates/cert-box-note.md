@@ -4,7 +4,7 @@ created: {{date}}
 updated: {{date}}
 tags: [cert, cpts, box]
 category: 10-projects
-status: bezig
+status: active
 machine: {{title}}
 os: 
 platform: 
@@ -23,7 +23,7 @@ url:
 
 # {{title}}
 
-**OS:** [Linux/Windows] · **Platform:** [HTB Academy/HTB Main/CTF] · **Moeilijkheid:** [Easy/Medium/Hard] · **Status:** bezig/af
+**OS:** [Linux/Windows] · **Platform:** [HTB Academy/HTB Main/CTF] · **Moeilijkheid:** [Easy/Medium/Hard] · **Status:** active/done
 
 Zie ook: [[enumeratie]] · [[initial-foothold]] · [[linux-privesc]]
 
