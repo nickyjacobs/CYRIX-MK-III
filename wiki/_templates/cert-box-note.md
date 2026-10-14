@@ -343,6 +343,10 @@ Zie ook: [[enumeratie]] · [[initial-foothold]] · [[linux-privesc]]
 > [!success]- Antwoord
 > 
 
+## Tijdlijn
+
+<!-- Wordt gevuld door dz -j, dz -f en dz -s. -->
+
 ## Flags
 
 **User flag**
