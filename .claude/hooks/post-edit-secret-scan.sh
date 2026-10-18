@@ -31,18 +31,29 @@ case "${file_path}" in
     *) exit 0 ;;
 esac
 
-# Re-scan disk (non-blocking — exit 0 zelfs bij hits, alleen waarschuwen)
-python3 scripts/validate.py --file "${file_path}" || {
-    echo "[POST-EDIT WARNING] Re-scan vond secrets na write — fix vóór commit." >&2
-}
+# Re-scan disk en NL-check. Het bestand is al geschreven, dus niets blokkeert.
+# Waarschuwingen gaan via exit 2 naar Claude: bij PostToolUse is dat de enige
+# manier waarop Claude ze ziet (stderr met exit 0 belandt nergens).
+warnings=""
 
-# Optionele NL-check voor .md in docs/, wiki/, root README
-case "${file_path}" in
+scan_out=$(python3 scripts/validate.py --file "${file_path}" 2>&1) || \
+    warnings+="[POST-EDIT] Re-scan vond secrets na write, fix vóór commit:
+${scan_out}
+"
+
+# NL-check voor Markdown. Claude geeft absolute paden door: vergelijk relatief.
+case "${file_path#"${REPO_ROOT}"/}" in
     docs/*.md|wiki/*.md|README.md|*.nl.md)
         if [[ -f scripts/check_verboden_woorden.py ]]; then
-            python3 scripts/check_verboden_woorden.py "${file_path}" 2>/dev/null || true
+            nl_out=$(python3 scripts/check_verboden_woorden.py "${file_path}" 2>&1 || true)
+            [[ -n "${nl_out}" ]] && warnings+="${nl_out}
+"
         fi
         ;;
 esac
 
+if [[ -n "${warnings}" ]]; then
+    printf '%s' "${warnings}" >&2
+    exit 2
+fi
 exit 0

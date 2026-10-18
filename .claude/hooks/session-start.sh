@@ -27,7 +27,7 @@ if [[ -f MEMORY.md ]]; then
     fi
     memory_count=$(printf '%s\n' "${memory_body}" | grep -c '^## ' || true)
     echo "## MEMORY (${memory_count} inzichten)"
-    printf '%s\n' "${memory_body}" | head -n 400
+    printf '%s\n' "${memory_body}"
     echo ""
 fi
 

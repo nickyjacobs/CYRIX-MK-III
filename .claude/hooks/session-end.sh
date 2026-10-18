@@ -59,8 +59,9 @@ if [[ -n "${transcript_path}" && -f "${transcript_path}" ]]; then
     tool_uses=$(grep -c '"type":"tool_use"' "${transcript_path}" 2>/dev/null || echo 0)
 fi
 
-# Skip triviale sessies (geen tool-uses EN geen content-changes)
-if [[ "${tool_uses}" -lt 3 && "${content_changes}" -eq 0 ]]; then
+# Skip triviale sessies. Alleen op tool-gebruik: content_changes telt ook
+# wijzigingen van vóór deze sessie, waardoor elke "hi" anders een log opleverde.
+if [[ "${tool_uses}" -lt 3 ]]; then
     exit 0
 fi
 
@@ -93,6 +94,11 @@ try:
                 entry = json.loads(line)
             except: continue
             txt = user_text(entry)
+            # Slash-command: gebruik naam + argumenten als focus
+            m = re.search(r'<command-name>/?([^<]+)</command-name>', txt or '')
+            if m:
+                a = re.search(r'<command-args>([^<]*)</command-args>', txt)
+                txt = m.group(1) + ' ' + (a.group(1) if a else '')
             # Sla tool-result-turns en system-reminder-wrappers over
             if txt and len(txt) > 5 and not txt.startswith('<'):
                 slug = re.sub(r'[^a-z0-9]+', '-', txt[:80].lower()).strip('-')[:40]
@@ -106,6 +112,9 @@ PYEOF
 fi
 
 slug="${session_focus:-session}"
+# Sessie-id erachter: twee sessies in dezelfde minuut overschreven elkaars log
+sid_short="${session_id:0:8}"
+[[ -n "${sid_short}" ]] && slug="${slug}-${sid_short}"
 raw_path="wiki/30-sessions/raw/${timestamp}-${slug}.md"
 processed_path="wiki/30-sessions/processed/${timestamp}-${slug}.md"
 mkdir -p "wiki/30-sessions/raw" "wiki/30-sessions/processed"
@@ -222,7 +231,9 @@ PYEOF
     echo "## Gewijzigde bestanden"
     echo ""
     if [[ "${content_changes}" -gt 0 ]]; then
-        git status --porcelain | sed 's/^/- `/; s/$/`/' | head -20
+        # awk leest alle input: head sloot de pipe bij >20 regels, waarna pipefail
+        # + set -e het hele script afbrak (geen backlog, geen commit).
+        git status --porcelain | sed 's/^/- `/; s/$/`/' | awk 'NR<=20'
     else
         echo "_Geen gecommitteerd-relevante wijzigingen._"
     fi
@@ -242,27 +253,32 @@ PYEOF
 mkdir -p .claude/state
 echo "${session_id}|${raw_path}|${processed_path}|${today}" >> .claude/state/ingest-backlog.txt
 
-# === Stap 4: Pre-commit safety scan ===
-if ! bash .claude/hooks/pre-commit-secret-scan.sh; then
-    # HARD findings — stage NIET committen, geef audit-info
-    echo "[SESSION-END] Pre-commit scan blokkeerde auto-commit. Audit: wiki/60-audits/" >&2
-    exit 0
-fi
-
-# === Stap 5: Auto-stage + auto-commit (expliciete scope) ===
+# === Stap 4: Auto-stage (expliciete scope) ===
 # Stage alleen paden die bewust publiek zijn. Een brede 'git add wiki/' pakte ook
 # losse notes en geplakte afbeeldingen uit de vault-root mee; zo belandden een
 # gespreksvoorbereiding en een module-screenshot ongemerkt in de repo.
 # Persoonlijke wiki-content (00-context, 10-projects, 20-knowledge, 30-sessions,
 # 50-decisions, 90-archives) is gitignored en hoort hier niet bij.
-git add wiki/index.md wiki/_templates/ 2>/dev/null || true
-git add wiki/40-references/ wiki/60-audits/lint/ 2>/dev/null || true
-git add wiki/10-projects/index.md wiki/20-knowledge/index.md 2>/dev/null || true
-git add wiki/00-context/*.example.md wiki/50-decisions/log.example.md 2>/dev/null || true
-git add docs/ scripts/ integrations/ 2>/dev/null || true
-git add .claude/skills/ .claude/agents/ .claude/rules/ .claude/hooks/ .claude/settings.json 2>/dev/null || true
-git add .claude-plugin/ 2>/dev/null || true
-git add README.md CLAUDE.md MEMORY.example.md LICENSE .gitignore .mcp.json .env.example 2>/dev/null || true
+# Per pad stagen: één ontbrekend pad liet anders de hele git add-regel falen,
+# waardoor ook de bestaande paden op die regel ongestaged bleven.
+stage() { local p; for p in "$@"; do [[ -e "$p" ]] && git add -- "$p" 2>/dev/null; done; return 0; }
+stage wiki/index.md wiki/_templates/
+stage wiki/40-references/ wiki/60-audits/lint/
+stage wiki/10-projects/index.md wiki/20-knowledge/index.md
+stage wiki/00-context/*.example.md wiki/50-decisions/log.example.md
+stage docs/ scripts/ integrations/
+stage .claude/skills/ .claude/agents/ .claude/rules/ .claude/hooks/ .claude/settings.json
+stage .claude-plugin/
+stage README.md CLAUDE.md MEMORY.example.md LICENSE .gitignore .mcp.json .env.example
+
+# === Stap 5: Pre-commit safety scan + commit ===
+# Na het stagen, anders scant de check een lege index.
+if ! bash .claude/hooks/pre-commit-secret-scan.sh; then
+    # HARD findings: unstage en niet committen, audit staat in wiki/60-audits/
+    git reset -q 2>/dev/null || true
+    echo "[SESSION-END] Pre-commit scan blokkeerde auto-commit. Audit: wiki/60-audits/" >&2
+    exit 0
+fi
 
 # Alleen committen als er daadwerkelijk staged changes zijn
 if git diff --cached --quiet 2>/dev/null; then

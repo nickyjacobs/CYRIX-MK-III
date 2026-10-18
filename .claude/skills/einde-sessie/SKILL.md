@@ -33,7 +33,7 @@ description: Handmatige sessie-afsluiting met interactieve focus-bevestiging. Vo
 **Interactive mode** (handmatige aanroep of `--interactive`):
 Vraag aan gebruiker: *"De focus van deze sessie was [X]. Klopt dat, of moet ik dit aanpassen?"*
 
-**Automatic mode** (via Stop-hook of `--auto`):
+**Automatic mode** (via `--auto`):
 Geen bevestiging vragen — focus direct afleiden, log schrijven, melden wat geschreven is.
 
 In beide modi leid je de focus af uit:
@@ -44,7 +44,7 @@ In beide modi leid je de focus af uit:
 
 ### Stap 2 — Vervang eventuele stub
 
-Check of `wiki/30-sessions/YYYY-MM-DD-onafgesloten.md` bestaat (geschreven door Stop-hook bij eerdere sessie-end). Als die er is: vervang volledig met deze formele log.
+Check of `wiki/30-sessions/YYYY-MM-DD-onafgesloten.md` bestaat (stub van een eerdere, onafgesloten sessie). Als die er is: vervang volledig met deze formele log.
 
 ### Stap 3 — Schrijf sessie-log
 
@@ -119,13 +119,12 @@ Sessie afgesloten:
 - **Optioneel:** `--focus=<korte slug>` — override de auto-gedetecteerde focus
 - **Optioneel:** `--no-merge` — schrijf alleen sessie-log, sla MEMORY/decisions/wiki update over
 - **Optioneel:** `--dry-run` — toon wat geschreven zou worden zonder schrijven
-- **Optioneel:** `--interactive` of `--auto` — forceer mode (default: interactive bij directe aanroep, auto bij Stop-hook)
+- **Optioneel:** `--interactive` of `--auto` — forceer mode (default: interactive)
 
 ## Trigger en mode-detectie
 
 | Trigger | Mode | Bevestiging vragen? |
 |---|---|---|
-| Stop-hook (substantiële sessie zonder /einde-sessie) | automatic | Nee — schrijf direct |
 | Gebruiker zegt `/einde-sessie` of "einde sessie" | interactive | Ja — bevestig focus en geef preview |
 | `/einde-sessie --auto` | automatic | Nee |
 | `/einde-sessie --interactive` | interactive | Ja |
@@ -133,4 +132,4 @@ Sessie afgesloten:
 
 ## Conflict-resolutie bij stub
 
-Als Stop-hook eerder een `wiki/30-sessions/YYYY-MM-DD-onafgesloten.md` schreef en je roept later `/einde-sessie` aan: **vervang** de stub volledig met de formele log. Geen merge — een formele log is altijd autoritatiever dan een stub.
+Als er eerder een `wiki/30-sessions/YYYY-MM-DD-onafgesloten.md` schreef en je roept later `/einde-sessie` aan: **vervang** de stub volledig met de formele log. Geen merge — een formele log is altijd autoritatiever dan een stub.

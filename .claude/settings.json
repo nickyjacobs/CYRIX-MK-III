@@ -20,16 +20,6 @@
         ]
       }
     ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": ".claude/hooks/stop-einde-sessie.sh"
-          }
-        ]
-      }
-    ],
     "SessionEnd": [
       {
         "matcher": "clear|resume|logout|prompt_input_exit|other",

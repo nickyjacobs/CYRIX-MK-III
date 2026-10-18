@@ -81,17 +81,24 @@ def scan(path: Path) -> int:
 
     hits: list[tuple[int, str, str]] = []
     in_code_block = False
+    in_frontmatter = False
 
     for i, line in enumerate(content.splitlines(), 1):
+        # Skip frontmatter (--- tot ---). Eigen vlag: eerder deelde dit de
+        # code-block-vlag, die bij de afsluitende --- nooit meer uitging, zodat
+        # alles na de frontmatter ongezien bleef.
+        if i == 1 and line.strip() == "---":
+            in_frontmatter = True
+            continue
+        if in_frontmatter:
+            if line.strip() == "---":
+                in_frontmatter = False
+            continue
         # Skip fenced code blocks
         if line.lstrip().startswith("```"):
             in_code_block = not in_code_block
             continue
         if in_code_block:
-            continue
-        # Skip frontmatter (--- to ---)
-        if i == 1 and line.strip() == "---":
-            in_code_block = True
             continue
 
         lowered = line.lower()

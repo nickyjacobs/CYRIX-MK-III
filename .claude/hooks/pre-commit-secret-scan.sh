@@ -27,6 +27,10 @@ audit_log="${audit_dir}/blocked-commits-$(date +%Y-%m-%d).md"
 
 scan_output=$(python3 scripts/validate.py --staged 2>&1) && exit_code=0 || exit_code=$?
 
+# Nooit de gevonden waarde zelf loggen: alleen bestand, regel en patroon.
+# Anders staat het secret alsnog in platte tekst in de audit.
+scan_output=$(printf '%s\n' "${scan_output}" | sed -E 's/^([[:space:]]+[^[:space:]]+:[0-9]+ .{1,3} [a-z_0-9]+):.*/\1: <redacted>/')
+
 if [[ "${exit_code}" -eq 2 ]]; then
     # HARD findings — blokkeer en log
     {
