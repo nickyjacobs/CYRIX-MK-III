@@ -39,6 +39,12 @@ Eén regel per finding, met `first-seen` in ISO-formaat. Bij oplossing verhuist 
 | Content-drift: config-scopes, transport-types (SSE deprecated) en CLI-commando's verouderd | `wiki/40-references/claude-code/mcp.md` | 2026-09-10 | weekly | open |
 | Content-drift: auto memory type-taxonomie, AGENTS.md, CLAUDE.local.md ontbreken | `wiki/40-references/claude-code/memory.md` | 2026-09-10 | weekly | open |
 | Nieuwe HOOG-prioriteit pagina's nog niet geingest (hooks-guide, scheduled-tasks, settings-reference, workflows, agents, cross-session-messaging, tools-reference) | `wiki/40-references/claude-code/` | 2026-09-10 | weekly | open |
+| `plugins.md` bron herstructureerd naar hub-pagina + tientallen subpagina's (components, security, create, mods, marketplace, etc.), onze referentie dekt dit niet | `wiki/40-references/claude-code/plugins.md` | 2026-10-12 | weekly | open |
+| Nieuwe mods-pagina's (plugins/mods/overview, create, reference, events, api) nog niet geingest; `plugin-authoring`-skill in deze workspace verwijst er al naar | `wiki/40-references/claude-code/` | 2026-10-12 | weekly | open |
+| Nieuwe auto mode-pagina's (auto-mode-config, auto-mode-classifier-billing) nog niet geingest; deze sessie draait zelf met Auto Mode actief | `wiki/40-references/claude-code/` | 2026-10-12 | weekly | open |
+| Nieuwe sandboxing-pagina's (sandboxing, sandbox-environments, cloud-environments) nog niet geingest | `wiki/40-references/claude-code/` | 2026-10-12 | weekly | open |
+| Nieuwe pagina claude-projects.md ("Projects", coordinatie van parallelle sessies) nog niet geingest | `wiki/40-references/claude-code/` | 2026-10-12 | weekly | open |
+| Content-drift agent-teams.md: subagent-definities als teammate-rol, uitgebreide model-resolutie, SendMessage/auto-mode-regels, subagentPromptCacheTtl ontbreken | `wiki/40-references/claude-code/agent-teams.md` | 2026-10-12 | weekly | open |
 
 ## Opgelost
 
