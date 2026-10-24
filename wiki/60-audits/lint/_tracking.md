@@ -39,6 +39,8 @@ Eén regel per finding, met `first-seen` in ISO-formaat. Bij oplossing verhuist 
 | Content-drift: config-scopes, transport-types (SSE deprecated) en CLI-commando's verouderd | `wiki/40-references/claude-code/mcp.md` | 2026-09-10 | weekly | open |
 | Content-drift: auto memory type-taxonomie, AGENTS.md, CLAUDE.local.md ontbreken | `wiki/40-references/claude-code/memory.md` | 2026-09-10 | weekly | open |
 | Nieuwe HOOG-prioriteit pagina's nog niet geingest (hooks-guide, scheduled-tasks, settings-reference, workflows, agents, cross-session-messaging, tools-reference) | `wiki/40-references/claude-code/` | 2026-09-10 | weekly | open |
+| `plugins.md` is één pagina, bron is nu een hele `plugins/`-sectie met 25+ subpagina's | `wiki/40-references/claude-code/plugins.md` | 2026-10-05 | weekly | open |
+| Content-drift: usage-limits beschreven als daily cap, bron noemt nu hourly limits; onze pagina zegt one-off runs tellen niet mee, bron zegt van wel | `wiki/40-references/claude-code/routines.md` | 2026-10-05 | weekly | open |
 
 ## Opgelost
 
