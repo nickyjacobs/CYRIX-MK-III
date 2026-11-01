@@ -29,6 +29,16 @@ Eén regel per finding, met `first-seen` in ISO-formaat. Bij oplossing verhuist 
 
 | Finding | Pagina | first-seen | Cadans | Status |
 |---|---|---|---|---|
+| HOOG: persoonlijke content (echte naam eigenaar, gezondheidsproject) in committable references | `wiki/40-references/ninja-possiblecooker-mc1001eu.md` | 2026-11-01 | maandelijks | open |
+| HOOG: README documenteert niet-bestaande Stop-hook met foutieve drempelwaarde | `README.md` | 2026-11-01 | maandelijks | open |
+| MIDDEN: README zegt security-reviewer wordt door post-edit hook aangeroepen, hook gebruikt enkel validate.py | `README.md` | 2026-11-01 | maandelijks | open |
+| MIDDEN: scripts/anonymize.py ontbreekt in architectuurdiagram scripts-lijst | `README.md` | 2026-11-01 | maandelijks | open |
+| MIDDEN: HASS_URL/HASS_TOKEN zonder corresponderende .mcp.json-server of documentatie | `.env.example` | 2026-11-01 | maandelijks | open |
+| MIDDEN: setup.sh kopieert MEMORY.example.md nooit naar MEMORY.md | `scripts/setup.sh` | 2026-11-01 | maandelijks | open |
+| MIDDEN: hardgecodeerd repo-pad nickyjacobs/CYRIX-MK-III in voorbeeldcommando's i.p.v. placeholder | `docs/routines.md` | 2026-11-01 | maandelijks | open |
+| LAAG: orphan page, niet gelinkt vanuit references-index | `wiki/40-references/ninja-possiblecooker-mc1001eu.md` | 2026-11-01 | maandelijks | open |
+| LAAG: frontmatter mist tags/category (en bij 1 bestand title) t.o.v. wiki/index.md-conventie | `wiki/60-audits/lint/daily-audit-2026-06-09.md`, `wiki/60-audits/lint/docs-drift-claudecode-2026-06-10.md` | 2026-11-01 | maandelijks | open |
+| LAAG: assets/cyrix-logo.png referentie in README zonder dat het bestand bestaat | `README.md` | 2026-11-01 | maandelijks | open |
 | Alle 23 claude-code-references hebben verlopen review-date | `wiki/40-references/claude-code/*.md` | 2026-09-10 | weekly | open |
 | `slash-commands.md` bron-URL bestaat niet meer, gemerged in `commands.md` | `wiki/40-references/claude-code/slash-commands.md` | 2026-09-10 | weekly | open |
 | `00-index.md` linkt CLI reference naar niet-bestaande URL `/cli-usage` | `wiki/40-references/claude-code/00-index.md` | 2026-09-10 | weekly | open |
